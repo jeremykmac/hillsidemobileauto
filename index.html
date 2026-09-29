@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hillside Mobile Auto | Mobile Oil Changes &amp; Inspections in Cache Valley, Utah</title>
+<meta name="description" content="Mobile oil changes, inspections, and light maintenance — we come to you in Cache Valley, Utah. No waiting room, no drop-off, no runaround.">
+
+<!-- Favicon: solid navy H on cream -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F7F3E8'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-weight='bold' font-size='22' text-anchor='middle' fill='%231E2D3D'%3EH%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;800&family=PT+Sans+Caption:wght@400;700&family=Roboto+Slab:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy:#1E2D3D;
+    --amber:#E0A02E;
+    --cream:#F7F3E8;
+    --maroon:#A01B23;
+    --white:#FFFFFF;
+    --ink:#1E2D3D;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'PT Sans Caption', Arial, sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.5;
+  }
+  h1,h2,h3{margin:0 0 .5em;}
+  h1,h2{font-family:'PT Sans Caption', Arial, sans-serif;}
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  section{padding:64px 0;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-weight:700;
+    font-size:.8rem;
+    color:var(--maroon);
+    margin-bottom:.5em;
+    display:block;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 28px;
+    border-radius:var(--radius);
+    font-weight:700;
+    text-decoration:none;
+    font-size:1rem;
+    border:2px solid transparent;
+    cursor:pointer;
+    font-family:'PT Sans Caption', Arial, sans-serif;
+    transition:transform .1s ease, opacity .15s ease;
+  }
+  .btn:hover{opacity:.92;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--maroon);color:var(--white);}
+  .btn-outline{background:transparent;color:var(--navy);border-color:var(--navy);}
+  .btn-outline:hover{background:var(--navy);color:var(--white);}
+  .btn-block{display:block;width:100%;text-align:center;}
+  .btn-sm{padding:9px 16px;font-size:.85rem;}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--white);
+    border-bottom:1px solid #eee;
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:1080px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand img{width:36px;height:auto;flex-shrink:0;}
+  .brand-name{
+    font-family:'Archivo Expanded', sans-serif;
+    font-weight:800;
+    font-size:1.05rem;
+    letter-spacing:.02em;
+    color:var(--navy);
+    line-height:1.1;
+  }
+  .brand-sub{
+    display:block;
+    font-family:'PT Sans Caption', sans-serif;
+    font-weight:700;
+    font-size:.6rem;
+    letter-spacing:.12em;
+    color:var(--navy);
+    opacity:.75;
+  }
+  nav.links{display:flex;align-items:center;gap:24px;}
+  nav.links a{
+    text-decoration:none;font-weight:700;font-size:.9rem;color:var(--navy);
+  }
+  nav.links a:hover{color:var(--maroon);}
+  .nav-cta{display:flex;align-items:center;gap:16px;}
+  .menu-toggle{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer;color:var(--navy);}
+  @media (max-width:760px){
+    nav.links{
+      display:none;position:absolute;top:100%;left:0;right:0;
+      background:var(--white);flex-direction:column;align-items:flex-start;
+      padding:16px 24px;gap:16px;border-bottom:1px solid #eee;
+    }
+    nav.links.open{display:flex;}
+    .menu-toggle{display:block;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--cream);
+    padding:72px 0 56px;
+    text-align:center;
+  }
+  .badge-lg{width:96px;height:auto;margin-bottom:20px;}
+  .hero h1{
+    font-family:'PT Sans Caption', sans-serif;
+    font-weight:700;
+    font-size:2.5rem;
+    color:var(--navy);
+    max-width:720px;margin:0 auto .4em;
+  }
+  .hero .sub{
+    font-family:'Roboto Slab', serif;
+    font-size:1.15rem;
+    color:var(--maroon);
+    margin-bottom:.6em;
+  }
+  .hero .descriptor{
+    font-size:1rem;
+    color:var(--navy);
+    opacity:.75;
+    margin-bottom:2em;
+  }
+  .hero .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  @media (max-width:600px){ .hero h1{font-size:1.9rem;} }
+
+  /* ---------- Vehicle checker ---------- */
+  .checker{background:var(--white);}
+  .checker-card{
+    border:2px solid var(--navy);
+    border-radius:var(--radius);
+    overflow:hidden;
+    max-width:640px;margin:0 auto;
+  }
+  .checker-head{
+    background:var(--navy);color:var(--cream);
+    padding:18px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .checker-head h2{font-size:1.1rem;margin:0;color:var(--cream);}
+  .tabs{display:flex;}
+  .tab-btn{
+    flex:1;padding:8px 12px;background:transparent;border:1px solid var(--cream);
+    color:var(--cream);font-weight:700;font-size:.8rem;cursor:pointer;border-radius:6px;
+  }
+  .tab-btn.active{background:var(--cream);color:var(--navy);}
+  .checker-body{padding:28px 24px;background:var(--white);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:6px;}
+  label{font-size:.8rem;font-weight:700;color:var(--navy);}
+  select,input[type="text"]{
+    padding:11px 12px;border:1.5px solid #ccc;border-radius:8px;
+    font-size:1rem;font-family:inherit;background:var(--white);color:var(--ink);
+  }
+  select:focus,input:focus{outline:none;border-color:var(--maroon);}
+  .vin-row{display:flex;gap:10px;margin-bottom:14px;}
+  .vin-row input{flex:1;text-transform:uppercase;}
+  .hint{font-size:.78rem;color:#666;margin-top:-6px;margin-bottom:10px;}
+  .result{
+    margin-top:18px;padding:16px 18px;border-radius:8px;font-size:.95rem;display:none;
+  }
+  .result.show{display:block;}
+  .result.lane1{background:#eef7ee;border:1.5px solid #3d8b3d;color:#245c24;}
+  .result.lane2{background:#fdf3e0;border:1.5px solid var(--amber);color:#7a5a13;}
+  .result h3{margin:0 0 6px;font-size:1rem;}
+  .result .actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  .result .veh-line{font-weight:700;margin-bottom:4px;}
+  .checker-note{font-size:.78rem;color:#777;text-align:center;margin-top:14px;}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--cream);}
+  .section-head{text-align:center;max-width:600px;margin:0 auto 40px;}
+  .section-head h2{font-size:1.9rem;color:var(--navy);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;}
+  .card{
+    background:var(--white);border-radius:var(--radius);padding:24px;
+    border-top:4px solid var(--maroon);
+  }
+  .card h3{font-size:1.05rem;color:var(--navy);}
+  .price{font-family:'Roboto Slab',serif;font-size:1.5rem;color:var(--maroon);font-weight:600;margin:.2em 0;}
+  .card ul{margin:0;padding-left:18px;font-size:.9rem;color:#444;}
+  .card ul li{margin-bottom:4px;}
+  .fineprint{font-size:.75rem;color:#888;margin-top:10px;}
+
+  /* ---------- How it works ---------- */
+  .howitworks{background:var(--white);position:relative;}
+  .ridge-divider{width:100%;height:40px;display:block;}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;}
+  .step{text-align:center;}
+  .step .num{
+    width:44px;height:44px;border-radius:50%;background:var(--maroon);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;
+    margin:0 auto 12px;
+  }
+  .step h3{font-size:1rem;color:var(--navy);}
+  .step p{font-size:.88rem;color:#555;margin:0;}
+
+  /* ---------- Service area ---------- */
+  .area{background:var(--cream);}
+  .area-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:start;}
+  @media (max-width:760px){.area-grid{grid-template-columns:1fr;}}
+  .area ul{padding-left:18px;}
+  .hours-table{width:100%;border-collapse:collapse;font-size:.95rem;}
+  .hours-table td{padding:8px 0;border-bottom:1px solid #ddd;}
+  .hours-table td:first-child{font-weight:700;color:var(--navy);}
+
+  /* ---------- Contact / footer ---------- */
+  footer{background:var(--navy);color:var(--cream);padding:48px 0 28px;text-align:center;}
+  footer .badge-lg{width:60px;height:auto;margin-bottom:12px;}
+  footer h2{color:var(--cream);font-size:1.4rem;}
+  footer a.contact-link{
+    display:inline-block;font-size:1.1rem;font-weight:700;margin:6px 14px;color:var(--cream);text-decoration:none;
+  }
+  footer a.contact-link:hover{color:var(--amber);}
+  .footer-fine{margin-top:28px;font-size:.78rem;opacity:.65;}
+  .footer-fine a{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header>
+  <div class="nav">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="Hillside Mobile Auto shield" width="36">
+      <span>
+        <span class="brand-name">HILLSIDE MOBILE AUTO</span>
+        <span class="brand-sub">MOBILE OIL CHANGES &amp; INSPECTIONS</span>
+      </span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">&#9776;</button>
+    <nav class="links" id="navLinks">
+      <a href="#checker">Check My Vehicle</a>
+      <a href="#services">Services</a>
+      <a href="#area">Service Area</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary btn-sm" id="navCallText" href="tel:+18018663466">Call or Text</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <img class="badge-lg" src="assets/logo.png" alt="Hillside Mobile Auto shield" width="96">
+    <h1>Car Care, Right Where You Are.</h1>
+    <p class="sub">No waiting room. No drop-off. No runaround.</p>
+    <p class="descriptor">Mobile Oil Changes &amp; Inspections · Cache Valley, Utah</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#checker">Check My Vehicle</a>
+      <a class="btn btn-outline" href="tel:+18018663466">Call or Text 801-866-3466</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== VEHICLE CHECKER ===================== -->
+<section class="checker" id="checker">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Start here</span>
+      <h2>Is your vehicle in our lane?</h2>
+      <p>Tell us your vehicle by VIN or by Year / Make / Model, and we'll tell you right away.</p>
+    </div>
+
+    <div class="checker-card">
+      <div class="checker-head">
+        <h2>Vehicle Checker</h2>
+      </div>
+      <div class="tabs" style="padding:12px 24px 0;background:#1E2D3D;">
+        <button class="tab-btn active" id="tabBtnManual" onclick="switchTab('manual')">Year / Make / Model</button>
+        <button class="tab-btn" id="tabBtnVin" onclick="switchTab('vin')">Look up by VIN</button>
+      </div>
+      <div style="height:12px;background:#1E2D3D;"></div>
+      <div class="checker-body">
+
+        <!-- Manual tab -->
+        <div class="tab-panel active" id="panel-manual">
+          <div class="field-row">
+            <div class="field">
+              <label for="selYear">Year</label>
+              <select id="selYear" onchange="onManualChange()"><option value="">Select year</option></select>
+            </div>
+            <div class="field">
+              <label for="selMake">Make</label>
+              <select id="selMake" onchange="onManualChange()"><option value="">Select make</option></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="selModel">Model <span style="font-weight:400;color:#888;">(optional)</span></label>
+              <select id="selModel" disabled><option value="">Select year &amp; make first</option></select>
+            </div>
+          </div>
+          <div class="hint">Model list loads live from the National Highway Traffic Safety Administration once you pick a year and make.</div>
+          <div class="result" id="resultManual"></div>
+        </div>
+
+        <!-- VIN tab -->
+        <div class="tab-panel" id="panel-vin">
+          <div class="vin-row">
+            <input type="text" id="vinInput" maxlength="17" placeholder="Enter your 17-character VIN">
+            <button class="btn btn-primary btn-sm" onclick="decodeVin()">Decode</button>
+          </div>
+          <div class="hint">Your VIN is on your registration, insurance card, or driver's-side door jamb.</div>
+          <div class="result" id="resultVin"></div>
+        </div>
+
+      </div>
+    </div>
+    <p class="checker-note">Currently serving domestic, Japanese, and Korean vehicles, model year 2000 and newer. Something else? We'll still take a look — just reach out.</p>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we do</span>
+      <h2>Services &amp; Pricing</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="eyebrow">Flagship</span>
+        <h3>Full-Synthetic Oil Change</h3>
+        <div class="price">$99</div>
+        <ul>
+          <li>Up to 5 qts full synthetic (+$8/qt after)</li>
+          <li>OEM-spec filter &amp; drain hardware</li>
+          <li>Full walk-around &amp; tire pressure check</li>
+          <li>Fluid top-offs, oil-life reset</li>
+          <li>Written inspection card, left in your car</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Add-Ons</h3>
+        <ul>
+          <li>Battery test — free with an oil change</li>
+          <li>Battery install (you supply battery) — $25</li>
+          <li>Wiper blades — $29 front / $39 front+rear</li>
+          <li>Cabin or engine air filter — from $40</li>
+          <li>Tire rotation (with oil change) — $30</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Standalone Tire Rotation</h3>
+        <div class="price">$65</div>
+        <ul>
+          <li>No oil change required</li>
+          <li>Free tread depth &amp; pressure check</li>
+          <li>Free visual brake-pad-thickness read</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Seasonal Packages</h3>
+        <div class="price">$89</div>
+        <ul>
+          <li>Spring Refresh, Summer Road-Trip Ready, or Winter Readiness</li>
+          <li>Battery test, tire rotation, fluid &amp; code scan</li>
+          <li>No oil change required</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pre-Purchase Inspection — Basic</h3>
+        <div class="price">$89</div>
+        <ul>
+          <li>Visual check + full code scan</li>
+          <li>Printed report</li>
+          <li>~30-45 minutes</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Pre-Purchase Inspection — Comprehensive</h3>
+        <div class="price">$199</div>
+        <ul>
+          <li>Full module scan, fluid &amp; engine bay audit</li>
+          <li>Wheels-off brake &amp; undercarriage inspection</li>
+          <li>Road test &amp; full photo report</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fineprint" style="text-align:center;margin-top:28px;">Scope: domestic, Japanese, and Korean vehicles, model year 2000+. No brake work, no European vehicles at this time.</p>
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="howitworks" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Simple by design</span>
+      <h2>How It Works</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Check your vehicle</h3>
+        <p>Use the checker above, or just call or text us.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Pick a time</h3>
+        <p>We'll text or email to lock in a date that works for you.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>We come to you</h3>
+        <p>We show up wherever you are in Cache Valley, ready to go.</p>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <h3>Back on the road</h3>
+        <p>You get a written record of everything we checked and did.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICE AREA ===================== -->
+<section class="area" id="area">
+  <div class="wrap">
+    <div class="area-grid">
+      <div>
+        <span class="eyebrow">Where we work</span>
+        <h2 style="color:#1E2D3D;">Service Area</h2>
+        <p>Based in Nibley, serving all of Cache Valley — from Wellsville to Smithfield, including Logan, North Logan, Hyde Park, Providence, River Heights, and Millville.</p>
+        <ul>
+          <li>Wellsville</li>
+          <li>Nibley</li>
+          <li>Logan &amp; North Logan</li>
+          <li>Hyde Park &amp; Smithfield</li>
+          <li>Providence, River Heights &amp; Millville</li>
+        </ul>
+        <p style="font-size:.85rem;color:#666;">Not sure if you're in range? Just ask — <a href="tel:+18018663466" style="color:#A01B23;font-weight:700;">call or text us</a>.</p>
+      </div>
+      <div>
+        <span class="eyebrow">When we work</span>
+        <h2 style="color:#1E2D3D;">Hours</h2>
+        <table class="hours-table">
+          <tr><td>Tue – Thu</td><td>Evenings from 5pm</td></tr>
+          <tr><td>Saturday</td><td>All day</td></tr>
+          <tr><td>Sunday</td><td>As needed</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT / FOOTER ===================== -->
+<footer id="contact">
+  <div class="wrap">
+    <img class="badge-lg" src="assets/logo.png" alt="Hillside Mobile Auto shield" width="60">
+    <h2>Hillside Mobile Auto</h2>
+    <div>
+      <a class="contact-link" href="tel:+18018663466">801-866-3466</a>
+      <a class="contact-link" href="mailto:hi@hillsidemobileauto.com">hi@hillsidemobileauto.com</a>
+    </div>
+    <p style="margin-top:14px;font-size:.9rem;opacity:.8;">Mobile Oil Changes &amp; Inspections · Cache Valley, Utah</p>
+    <div class="footer-fine">
+      &copy; <span id="year"></span> Hillside Mobile Auto, LLC. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ CONFIG ============
+   Paste a Square booking URL here once Square Appointments is set up.
+   Empty string keeps every "Book" action as text-to-book.           */
+const CONFIG = {
+  bookingUrl: "",
+  phone: "8018663466",
+  phoneDisplay: "801-866-3466",
+  email: "hi@hillsidemobileauto.com"
+};
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Mobile nav toggle */
+document.getElementById('menuToggle').addEventListener('click', function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+/* ============ Tabs ============ */
+function switchTab(which){
+  document.getElementById('tabBtnManual').classList.toggle('active', which === 'manual');
+  document.getElementById('tabBtnVin').classList.toggle('active', which === 'vin');
+  document.getElementById('panel-manual').classList.toggle('active', which === 'manual');
+  document.getElementById('panel-vin').classList.toggle('active', which === 'vin');
+}
+
+/* ============ In-scope makes (domestic / Japanese / Korean) ============ */
+const ALLOWED_MAKES = [
+  "CHEVROLET","FORD","GMC","BUICK","CADILLAC","CHRYSLER","DODGE","JEEP","RAM","LINCOLN","TESLA","PONTIAC","SATURN","MERCURY",
+  "TOYOTA","HONDA","NISSAN","MAZDA","SUBARU","MITSUBISHI","LEXUS","ACURA","INFINITI","SCION","SUZUKI","ISUZU",
+  "HYUNDAI","KIA","GENESIS"
+];
+
+const MAKE_LIST = [
+  "Buick","Cadillac","Chevrolet","Chrysler","Dodge","Ford","GMC","Jeep","Lincoln","Ram","Tesla",
+  "Acura","Honda","Hyundai","Infiniti","Kia","Lexus","Mazda","Mitsubishi","Nissan","Subaru","Toyota","Genesis"
+].sort();
+
+/* Populate Year + Make dropdowns */
+(function initManual(){
+  const yearSel = document.getElementById('selYear');
+  const thisYear = new Date().getFullYear();
+  for (let y = thisYear; y >= 2000; y--){
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yearSel.appendChild(opt);
+  }
+  const makeSel = document.getElementById('selMake');
+  MAKE_LIST.forEach(function(m){
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m;
+    makeSel.appendChild(opt);
+  });
+})();
+
+function onManualChange(){
+  const year = document.getElementById('selYear').value;
+  const make = document.getElementById('selMake').value;
+  const modelSel = document.getElementById('selModel');
+
+  if (year && make){
+    renderEligibility('resultManual', {
+      year: year, make: make, model: '', vin: '', fuel: ''
+    });
+    modelSel.disabled = true;
+    modelSel.innerHTML = '<option value="">Loading models…</option>';
+    fetchModels(make, year).then(function(models){
+      modelSel.innerHTML = '<option value="">Select model (optional)</option>';
+      models.forEach(function(m){
+        const opt = document.createElement('option');
+        opt.value = m; opt.textContent = m;
+        modelSel.appendChild(opt);
+      });
+      modelSel.disabled = false;
+      modelSel.onchange = function(){
+        renderEligibility('resultManual', { year: year, make: make, model: modelSel.value, vin:'', fuel:'' });
+      };
+    }).catch(function(){
+      modelSel.innerHTML = '<option value="">Model list unavailable — that\'s okay, we\'ll confirm on arrival</option>';
+      modelSel.disabled = true;
+    });
+  } else {
+    document.getElementById('resultManual').className = 'result';
+    modelSel.disabled = true;
+    modelSel.innerHTML = '<option value="">Select year &amp; make first</option>';
+  }
+}
+
+function fetchModels(make, year){
+  const url = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/' +
+    encodeURIComponent(make) + '/modelyear/' + encodeURIComponent(year) + '?format=json';
+  return fetch(url, { signal: withTimeout(6000) })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      const results = (data && data.Results) || [];
+      const names = results.map(function(r){ return r.Model_Name; });
+      return Array.from(new Set(names)).sort();
+    });
+}
+
+function withTimeout(ms){
+  if (!('AbortController' in window)) return undefined;
+  const controller = new AbortController();
+  setTimeout(function(){ controller.abort(); }, ms);
+  return controller.signal;
+}
+
+/* ============ VIN decode ============ */
+function decodeVin(){
+  const vin = document.getElementById('vinInput').value.trim().toUpperCase();
+  const resultEl = document.getElementById('resultVin');
+  if (vin.length !== 17){
+    resultEl.className = 'result show lane2';
+    resultEl.innerHTML = '<h3>That doesn\'t look like a full VIN</h3><p>VINs are exactly 17 characters. Double check and try again, or just call/text us with your year, make, and model.</p>';
+    return;
+  }
+  resultEl.className = 'result show';
+  resultEl.innerHTML = '<p>Decoding…</p>';
+
+  const url = 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/' + encodeURIComponent(vin) + '?format=json';
+  fetch(url, { signal: withTimeout(6000) })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      const info = (data && data.Results && data.Results[0]) || {};
+      const year = info.ModelYear || '';
+      const make = info.Make || '';
+      const model = info.Model || '';
+      const disp = info.DisplacementL ? (parseFloat(info.DisplacementL).toFixed(1) + 'L') : '';
+      const cyl = info.EngineCylinders ? (info.EngineCylinders + '-cyl') : '';
+      const fuel = info.FuelTypePrimary || '';
+      const engine = [disp, cyl].filter(Boolean).join(' ');
+
+      if (!make || !year){
+        resultEl.className = 'result show lane2';
+        resultEl.innerHTML = '<h3>Couldn\'t decode that VIN</h3><p>That happens sometimes with older or imported vehicles. Just text or email us your VIN and we\'ll take a look.</p>' + vinActions(vin);
+        return;
+      }
+      renderEligibility('resultVin', { year: year, make: make, model: model, vin: vin, fuel: fuel, engine: engine });
+    })
+    .catch(function(){
+      resultEl.className = 'result show lane2';
+      resultEl.innerHTML = '<h3>Couldn\'t reach the VIN lookup</h3><p>No worries — just text or email us your VIN and we\'ll confirm your vehicle by hand.</p>' + vinActions(vin);
+    });
+}
+
+function vinActions(vin){
+  return '<div class="actions">' + smsButton('VIN: ' + vin) + emailButton('VIN: ' + vin) + '</div>';
+}
+
+/* ============ Eligibility + lane rendering ============ */
+function renderEligibility(targetId, info){
+  const el = document.getElementById(targetId);
+  const year = parseInt(info.year, 10);
+  const makeUpper = (info.make || '').toUpperCase();
+  const isNewEnough = !isNaN(year) && year >= 2000;
+  const isAllowedMake = ALLOWED_MAKES.indexOf(makeUpper) !== -1;
+  const isDiesel = /diesel/i.test(info.fuel || '');
+  const inScope = isNewEnough && isAllowedMake && !isDiesel;
+
+  const vehLine = [info.year, info.make, info.model].filter(Boolean).join(' ') +
+    (info.engine ? ' · ' + info.engine : '');
+
+  const messageBody = 'Hi! I checked my vehicle on the website: ' + vehLine +
+    (info.vin ? (' (VIN ' + info.vin + ')') : '') + ". I'd like to book a service.";
+
+  if (inScope){
+    el.className = 'result show lane1';
+    el.innerHTML =
+      '<div class="veh-line">' + escapeHtml(vehLine) + '</div>' +
+      '<h3>You\'re in our lane! 🎉</h3>' +
+      '<p>We service this vehicle. Text or call us to lock in a time — mention your vehicle and we\'ll take it from there.</p>' +
+      '<div class="actions">' + smsButton(messageBody) + emailButton(messageBody) + '</div>';
+  } else {
+    el.className = 'result show lane2';
+    el.innerHTML =
+      '<div class="veh-line">' + escapeHtml(vehLine) + '</div>' +
+      '<h3>Let\'s confirm your vehicle</h3>' +
+      '<p>This one falls outside our standard lane (European makes, pre-2000, or diesel need a quick confirmation first) — but reach out and we\'ll let you know if we can help.</p>' +
+      '<div class="actions">' + smsButton(messageBody) + emailButton(messageBody) + '</div>';
+  }
+}
+
+function escapeHtml(s){
+  return (s || '').replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+
+function isIOS(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+function smsButton(body){
+  const sep = isIOS() ? '&' : '?';
+  const href = 'sms:+1' + CONFIG.phone + sep + 'body=' + encodeURIComponent(body);
+  return '<a class="btn btn-primary btn-sm" href="' + href + '">Text to Book</a>';
+}
+function emailButton(body){
+  const href = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent('Hillside Mobile Auto — Booking Request') + '&body=' + encodeURIComponent(body);
+  return '<a class="btn btn-outline btn-sm" href="' + href + '">Email Us</a>';
+}
+</script>
+
+</body>
+</html>
