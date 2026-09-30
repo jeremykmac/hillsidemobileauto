@@ -186,6 +186,15 @@
   .result .veh-line{font-weight:700;margin-bottom:4px;}
   .checker-note{font-size:.78rem;color:#777;text-align:center;margin-top:14px;}
 
+  /* ---------- Book online ---------- */
+  .booking{background:var(--cream);}
+  .booking-card{
+    max-width:480px;margin:0 auto;text-align:center;
+    background:var(--white);border-radius:var(--radius);
+    border:2px solid var(--navy);padding:32px 28px;
+  }
+  .booking-card p{margin:0 0 20px;color:#444;}
+
   /* ---------- Services ---------- */
   .services{background:var(--cream);}
   .section-head{text-align:center;max-width:600px;margin:0 auto 40px;}
@@ -250,6 +259,7 @@
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">&#9776;</button>
     <nav class="links" id="navLinks">
       <a href="#checker">Check My Vehicle</a>
+      <a href="#book">Book Online</a>
       <a href="#services">Services</a>
       <a href="#area">Service Area</a>
       <a href="#contact">Contact</a>
@@ -269,6 +279,7 @@
     <p class="descriptor">Mobile Oil Changes &amp; Inspections · Cache Valley, Utah</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="#checker">Check My Vehicle</a>
+      <a class="btn btn-outline" href="#book">Book Online</a>
       <a class="btn btn-outline" href="tel:+18018663466">Call or Text 801-866-3466</a>
     </div>
   </div>
@@ -329,6 +340,22 @@
       </div>
     </div>
     <p class="checker-note">Currently serving domestic, Japanese, and Korean vehicles, model year 2000 and newer. Something else? We'll still take a look — just reach out.</p>
+  </div>
+</section>
+
+<!-- ===================== BOOK ONLINE ===================== -->
+<section class="booking" id="book">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Ready when you are</span>
+      <h2>Book Online</h2>
+    </div>
+    <div class="booking-card">
+      <p>Pick a service and a time that works for you — you'll get a confirmation right away.</p>
+      <!-- Start Square Appointments Embed Code -->
+      <script src='https://square.site/appointments/buyer/widget/8vo31a3owzji1t/L7HJP6SJY1D4C.js'></script>
+      <!-- End Square Appointments Embed Code -->
+    </div>
   </div>
 </section>
 
