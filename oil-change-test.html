@@ -53,18 +53,13 @@
   .svc-price{margin:0;font-weight:700;color:var(--maroon);font-size:18px;white-space:nowrap}
   .svc-price span{font-size:13px;font-weight:400;color:var(--muted)}
   .svc-note{font-size:14px;color:var(--muted)}
-  .mini{border-collapse:collapse;font-size:15px;width:100%;max-width:340px}
-  .mini th,.mini td{text-align:left;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
-  .mini thead th{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-  .mini td{font-weight:700}
-  .seasons{display:grid;gap:12px}
-  @media (min-width:760px){.seasons{grid-template-columns:repeat(3,1fr)}}
-  .season{background:var(--page);border-radius:4px;padding:14px}
-  .season h5{margin:0;font-size:16px}
-  .season .when{margin:2px 0 8px;font-size:13px;color:var(--muted)}
+  @media (min-width:960px){.svc-grid.three{grid-template-columns:repeat(3,1fr)}}
+  .svc-grid.top{align-items:start}
+  .grp-sub{margin:-14px 0 -12px}
+  .svc-save{font-weight:700;color:var(--maroon);font-size:15px;margin-top:auto!important}
   .checks.sm{font-size:15px;gap:4px}
   .back{display:flex;justify-content:center;padding-top:4px}
-  .btn-ghost{background:transparent;color:var(--maroon);box-shadow:inset 0 0 0 2px var(--maroon);text-decoration:none;max-width:420px;min-height:52px;font-size:17px}
+  .btn.btn-ghost{background:transparent;color:var(--maroon);box-shadow:inset 0 0 0 2px var(--maroon);text-decoration:none;max-width:420px;min-height:52px;font-size:17px}
 
   .intro{display:flex;flex-direction:column;gap:12px}
   .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--maroon)}
@@ -225,36 +220,36 @@
       <div class="svc-grid">
         <article class="svc">
           <div class="svc-top"><h4>Tire Rotation</h4><p class="svc-price">$35 <span>with an oil change</span></p></div>
-          <p>Moves your tires around so they wear evenly and last longer. With the wheels off, I also check tread depth, set tire pressure, and take a look at your brake pads.</p>
-          <p class="svc-note">$65 on its own. If a tire is unsafe to rotate (badly uneven wear, dry rot, or worn-out tread), I'll skip it, note it on your card, and you won't be charged.</p>
+          <p>Rotating your tires means more even tread wear, longer tire life, and better grip. Includes a tread depth, air pressure, and brake-pad check while the wheels are off.</p>
+          <p class="svc-note">$65 on its own.</p>
         </article>
 
         <article class="svc">
           <div class="svc-top"><h4>Cabin Air Filter Service</h4><p class="svc-price">$45</p></div>
-          <p>This filter cleans the air coming through your vents. A clogged one means weak airflow, foggy windows and musty smells. New filter, installed.</p>
+          <p>Don't skimp on the air you breathe. A new cabin air filter and duct treatment means no more AC funk or guessing where that filter's hiding.</p>
         </article>
 
         <article class="svc">
           <div class="svc-top"><h4>Engine Air Filter Service</h4><p class="svc-price">$40 <span>car or small SUV</span></p></div>
-          <p>Keeps dust and dirt out of your engine. A dirty one can cost you power and fuel mileage. New filter, installed.</p>
-          <p class="svc-note">$55 for a truck or larger SUV.</p>
-        </article>
-
-        <article class="svc">
-          <div class="svc-top"><h4>Wiper Blades</h4><p class="svc-price">from $34</p></div>
-          <p>New blades, installed. Standard blades are dependable everyday rubber blades. Premium blades are silicone, which lasts longer.</p>
-          <table class="mini">
-            <thead><tr><th></th><th>Fronts</th><th>Fronts + back</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Standard</th><td>$34</td><td>$48</td></tr>
-              <tr><th scope="row">Premium</th><td>$54</td><td>$68</td></tr>
-            </tbody>
-          </table>
+          <p>Your engine breathes too. A fresh engine air filter and a cleaned-out air box keep dust and grit out and airflow strong, so your car can run its best.</p>
+          <p class="svc-note">$55 for a truck or SUV.</p>
         </article>
 
         <article class="svc">
           <div class="svc-top"><h4>Battery Replacement, Install</h4><p class="svc-price">$25</p></div>
-          <p>You bring the battery and I'll install it. Your battery gets tested at every oil change, so you'll know when it's getting weak.</p>
+          <p>Bring the battery you want and it goes in right, cables cleaned and checked for a tight, corrosion-free fit so it seats solid and starts strong. No dealer trip, no overpaying to swap a battery. All for one flat fee.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Standard Wiper Blades</h4><p class="svc-price">$34 <span>fronts</span></p></div>
+          <p>Quality all-season beam blades that provide a clean streak-free wipe, fitted and installed.</p>
+          <p class="svc-note">$48 for fronts + back.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Premium Wiper Blades</h4><p class="svc-price">$54 <span>fronts</span></p></div>
+          <p>Premium silicone beam blades, tough enough for Cache Valley winters, provide a clean streak-free wipe, fitted and installed.</p>
+          <p class="svc-note">$68 for fronts + back.</p>
         </article>
 
         <article class="svc">
@@ -264,36 +259,72 @@
       </div>
 
       <h3 class="grp">Seasonal packages</h3>
-      <div class="svc svc-wide">
-        <div class="svc-top"><h4>Get your car ready for the season ahead</h4><p class="svc-price">$69 <span>with an oil change</span></p></div>
-        <p>About 90 minutes. $89 on its own, no oil change needed. Every package includes a battery test, a tire rotation (with tread, pressure and brake pad checks), fluid top-offs, a wiper check, and a check-engine code scan. Each season adds:</p>
-        <div class="seasons">
-          <div class="season">
-            <h5>Spring Refresh</h5><p class="when">March and April</p>
-            <ul class="checks sm"><li>Underbody check for winter salt and rust</li></ul>
-          </div>
-          <div class="season">
-            <h5>Summer Road-Trip Ready</h5><p class="when">May and June</p>
-            <ul class="checks sm"><li>Coolant condition check</li><li>A/C vent temperature check (I don't recharge A/C)</li></ul>
-          </div>
-          <div class="season">
-            <h5>Winter Storm Prep</h5><p class="when">October and November</p>
-            <ul class="checks sm"><li>Coolant freeze-point check</li><li>Washer fluid swapped to winter-rated</li></ul>
-          </div>
-        </div>
-        <p class="svc-note">Wiper blades are extra if yours need replacing.</p>
+      <p class="fine grp-sub">No oil change needed. About 90 minutes each.</p>
+      <div class="svc-grid three">
+        <article class="svc">
+          <div class="svc-top"><h4>Spring Refresh</h4><p class="svc-price">$89</p></div>
+          <p>Shake off winter. A post-thaw once-over to catch what the cold and roads left behind, so you head into spring with no surprises.</p>
+          <ul class="checks sm">
+            <li>Battery test</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake, washer)</li>
+            <li>Full code scan</li>
+            <li>Undercarriage look for road-salt corrosion</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Summer Road-Trip Ready</h4><p class="svc-price">$89</p></div>
+          <p>Before you load up and go. Heat and long miles are hard on a car, so this gets yours road-trip ready before you find out the hard way.</p>
+          <ul class="checks sm">
+            <li>Battery test (heat kills batteries faster than cold)</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Coolant level and condition check</li>
+            <li>A/C vent check, so you know the cold air's actually flowing</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake, washer)</li>
+            <li>Full code scan</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Winter Storm Prep</h4><p class="svc-price">$89</p></div>
+          <p>Before the first freeze, get set for Cache Valley winter on your terms and not stuck waiting in the cold.</p>
+          <ul class="checks sm">
+            <li>Battery test (cold is where weak batteries die)</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Coolant freeze-point check</li>
+            <li>Washer fluid swapped to winter-rated</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake)</li>
+            <li>Full code scan</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
       </div>
 
       <h3 class="grp">Buying a used car?</h3>
-      <div class="svc-grid">
+      <div class="svc-grid top">
         <article class="svc">
           <div class="svc-top"><h4>Pre-Purchase Inspection, Basic</h4><p class="svc-price">$89</p></div>
-          <p>About 45 minutes at the seller's location. A careful visual check with photos and a full code scan, plus a printed report. No lifting the car.</p>
+          <p>Thinking about a used car? Get an expert's eyes on it before any money changes hands. A full visual once-over and a complete computer scan, done wherever the car's parked, with a printed report giving you an honest, objective read on the car as it stands the day it's inspected. The scan even shows if a seller cleared codes right before you arrived, so nothing hides. Just the facts, no sales pitch, and the decision stays yours.</p>
         </article>
         <article class="svc">
           <div class="svc-top"><h4>Pre-Purchase Inspection, Comprehensive</h4><p class="svc-price">$199</p></div>
-          <p>About 90 minutes. A full scan of every computer module, a fluid and engine bay check, all four wheels off to measure brakes, an underbody and frame check (with a camera inside the frame rails), tire wear, electrical and paint checks, and a 10-minute test drive. Printed report with photos.</p>
-          <p class="svc-note">$40 deposit. Findings only: what you do with them is your call. The seller has to agree to the inspection and test drive.</p>
+          <p>No one likes buying a lemon. Know what you're getting into before you buy. Done wherever the car's parked, this is the full workup, with a printed photo report you keep:</p>
+          <ul class="checks sm">
+            <li>Full computer scan of every module, plus confirmation the emissions monitors read "Ready" (so a seller can't clear codes right before you arrive to hide a problem)</li>
+            <li>Fluids and engine bay audited for leaks and wear</li>
+            <li>All four wheels pulled to measure true brake and rotor wear</li>
+            <li>Underbody checked for frame damage and hidden rust</li>
+            <li>Tires, lights, and electronics checked</li>
+            <li>Road test for how it actually drives (with the seller's OK)</li>
+          </ul>
+          <p>About 90 minutes and a clear, objective picture of the car as it stands on inspection day, so you walk in with the facts, and the leverage, before you sign. You make the call; the report shows you what's really there.</p>
+          <p class="svc-save">Take advantage of the $199 introductory price before it goes up.</p>
         </article>
       </div>
 
