@@ -38,12 +38,41 @@
   function setStatus(el, kind, html){ el.className = "status show " + kind; el.innerHTML = html; }
   function clearStatus(el){ el.className = "status"; el.innerHTML = ""; }
 
-  // EPA lists trucks under many names ("F150 Pickup 4WD FFV", "Silverado K15 4WD"). Group them under one clean name.
-  const STOP = /^(2WD|4WD|AWD|FWD|RWD|4x4|4x2|FFV|GVWR.*|BASE|PAYLOAD|\d\.\dL|[CK]\d{2,4}|Cab|Pickup|Chassis|L|LE|SE|XLE|XSE|LTD|Limited|Eco)$|\//i;
-  function baseModel(name){
+  // EPA lists one car under many names ("F150 Pickup 4WD FFV", "Silverado K15 4WD", "Corvette Z06", "Camry Hybrid").
+  // 1) drop electric / fuel-cell variants (no oil to change), 2) boil each name down to the model family,
+  // 3) fold trims into their base model. Hybrids stay: they show up as an engine choice instead.
+  const EV = /\b(EV|EUV|Electric|Electrified|Leaf|Bolt|LYRIQ|OPTIQ|VISTIQ|CELESTIQ|Prologue|F-150 Lightning|Mach-E|ARIYA|Ioniq [569]|EV\d|Solterra|Trailseeker|Uncharted|bZ\w*|Mirai|Nexo|FCV|FCEV|FCX|Fuel Cell|MX-30|i-MiEV|Wagoneer S|Recon|RZ|GV60|Daytona|Th!nk|Hyper-Mini|Altra)\b|^ZDX (AWD|RWD)|\bES \d+e\b|^C-HR AWD \d+inch/i;
+  const SW = "2WD 4WD AWD FWD RWD PAWD 4x4 4x2 FFV BASE PAYLOAD Cab Pickup Chassis L LE SE XLE XSE LTD Limited Eco Hybrid Plug-in PHEV MHEV HEV Energi eAssist Taxi Police USPS Special Service Blue Nismo ST RS SHO Hellcat TRX Raptor Convertible Roadster Hatchback Premier Crew Ext MAX Wagon Van Cargo Select Performance Bullitt LWB SWB Z06 ZR1 ZR2 Type Sport NYC Turbo Prime Sedan Coupe FF Timberline Platinum Badlands Sasquatch Tremor Diamond Black Dual-fuel Bi-Fuel CNG Natural Gas SFE XFE HFE HO RHO Warlock Lariat Lobo STX SS Si HF HX Widebody Scat Aero Hearse Limo Limo. Livery Funeral Coach Armored Postal Mud Terrain Tires Trailhawk TrackHawk Trackhawk EcoDiesel Rubicon Rubic Wilderness Denali with without R/T SRT-8 - Classic LD Door Doors Dr 2Dr 4Dr 5Dr 2-Dr 4-Dr 4-Door 5-Door 2Door 4Door".split(" ");
+  const STOP = new RegExp("^(" + SW.map((x) => x.replace(/[.*+?^${}()|[\]\\\/-]/g, "\\$&")).join("|") + "|GVWR.*|\\d\\.\\dL|[CK]\\d{2,4}|\\d{2}|1500|2500|3500|HD|SRT\\d*|[A-Z]|\\d)$", "i");
+  const LEXUS = /^(CT|ES|GS|GX|HS|IS|LC|LS|LX|NX|RC|RX|SC|TX|UX) ?\d*/;
+  // Pairs that look like "base + trim" but are really different vehicles; keep them separate.
+  const DISTINCT = new Set(["Corolla|Corolla Cross", "Corolla|GR Corolla", "Transit|Transit Connect", "Eclipse|Eclipse Cross", "Camry|Camry Solara", "Crown|Crown Signia", "Express|City Express", "Grand Cherokee|Grand Cherokee L", "Santa|Santa Cruz", "Ram|Ram Promaster"]);
+
+  function family(make, name){
+    name = name.trim().replace(/^New /, ""); let m;
+    if (make === "Lexus" && (m = name.match(LEXUS))) return m[1];            // RX 350 / RX 350h / RX 450h -> RX
+    if (/^(Shelby .*Mustang|Mustang)/.test(name)) return "Mustang";
+    if (/^GR ?86/.test(name)) return "GR86";
+    if (/^Sentra/.test(name)) return "Sentra";
+    if (/^Prius/.test(name)) return "Prius";
+    if (/^Transit T\d+/.test(name)) return "Transit";
+    if (/^(Sonic|Aveo|Optra) 5/.test(name)) return name.split(" ")[0];
     const out = [];
-    for (const t of name.split(/\s+/)){ if (STOP.test(t)) break; out.push(t); }
-    return (out.join(" ") || name).trim();
+    name.split(/\s+/).forEach((t, i) => { if (out.stop) return; if (i > 0 && STOP.test(t)) { out.stop = true; return; } out.push(t); });
+    let r = out.join(" ") || name;
+    if (make === "Mazda" && /^\d$/.test(r.split(" ")[0])) r = "Mazda" + r.split(" ")[0];   // "3 4-Door" -> Mazda3
+    return r;
+  }
+  function buildGroups(make, names){
+    const fam = new Map();                                  // family -> [EPA model names]
+    for (const n of names){ if (EV.test(n)) continue; const f = family(make, n); if (!fam.has(f)) fam.set(f, []); fam.get(f).push(n); }
+    const out = new Map();
+    for (const [f, list] of fam){
+      const w = f.split(" "); let tgt = f;
+      for (let k = w.length - 1; k > 0; k--){ const p = w.slice(0, k).join(" "); if (fam.has(p) && !DISTINCT.has(p + "|" + f)){ tgt = p; break; } }
+      if (!out.has(tgt)) out.set(tgt, []); out.get(tgt).push(...list);
+    }
+    return out;
   }
 
   // "Auto (S8), 6 cyl, 3.5 L, Turbo" -> "3.5L 6-cyl Turbo"
@@ -68,6 +97,14 @@
       else if (/hybrid/i.test(x)) keep.push("Hybrid");
     }
     return [disp, cyl, ...new Set(keep)].filter(Boolean).join(" ");
+  }
+
+  // EPA only says "hybrid" in the model name (Prius, "RAV4 Hybrid", "RX 450h"), not in the engine text.
+  // Now that hybrids are folded into their base model, tag the engine so a 2.5L hybrid isn't mistaken for the 2.5L gas one.
+  function powertrainTag(modelName){
+    if (/plug-in|PHEV|Energi|\bPrime\b|^(Volt|Clarity)\b/i.test(modelName)) return "Plug-in Hybrid";
+    if (/hybrid|\bHEV\b|\b\d{3}h\b|\bPlus$|^(Prius|Insight|CR-Z|Ioniq)\b/i.test(modelName)) return "Hybrid";
+    return "";
   }
 
   async function initYears(){
@@ -104,8 +141,7 @@
     loading(modelSel, "Loading models…");
     try{
       const names = (await epa("/model?year=" + yearSel.value + "&make=" + encodeURIComponent(makeSel.value))).map((m) => m.text);
-      groups = new Map();
-      for (const n of names){ const b = baseModel(n); if (!groups.has(b)) groups.set(b, []); groups.get(b).push(n); }
+      groups = buildGroups(makeSel.value, names);
       const bases = [...groups.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
       fill(modelSel, "Model", [...bases, { text: "Don't see your model?", value: "__missing" }], false);
     }catch(e){ epaDown(); }
@@ -125,7 +161,15 @@
       const lists = await Promise.all(variants.map((v) =>
         epa("/options?year=" + yearSel.value + "&make=" + encodeURIComponent(makeSel.value) + "&model=" + encodeURIComponent(v)).catch(() => [])));
       const seen = new Set(); const engines = [];
-      for (const o of lists.flat()){ const l = engineLabel(o.text); if (!seen.has(l)){ seen.add(l); engines.push(l); } }
+      lists.forEach((list, i) => {
+        const tag = powertrainTag(variants[i]);
+        for (const o of list){
+          let l = engineLabel(o.text); if (l === "Electric") continue;
+          if (tag && !/hybrid/i.test(l)) l += " " + tag;
+          if (!seen.has(l)){ seen.add(l); engines.push(l); }
+        }
+      });
+      if (!engines.length){ fill(engSel, "Engine", [], true); setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes. If your car does have an engine, <a href=\"sms:+18018663466\">text me</a> the year, make and model."); return; }
       engines.sort((a, b) => (parseFloat(a) || 99) - (parseFloat(b) || 99));
       const items = engines.map((e) => ({ text: e, value: e }));
       items.push({ text: "Not sure", value: "__unsure" });
@@ -138,7 +182,6 @@
     clearStatus($("vstatus"));
     const v = engSel.value;
     if (/diesel/i.test(v)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
-    else if (v === "Electric") setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes.");
     updateChip();
   });
 
@@ -187,7 +230,8 @@
       const turbo = /yes/i.test(d.Turbo || "") ? "Turbo" : "";
       vinInfo = { year: d.ModelYear, make: d.Make, model: d.Model, engine: [disp, cyl, turbo].filter(Boolean).join(" "), fuel: d.FuelTypePrimary || "" };
       clearStatus($("vstatus"));
-      if (/diesel/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
+      if (/^electric$/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes.");
+      else if (/diesel/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
       updateChip();
     }catch(e){
       setStatus($("vstatus"), "warn", "I couldn't decode that VIN. Double-check it, or switch back to year, make and model.");
