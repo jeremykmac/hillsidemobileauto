@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Book an Oil Change | Hillside Mobile Auto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@800&family=PT+Sans+Caption:wght@400;700&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: single centered column, phone-first. Brand tokens from the locked hero. */
+  :root{
+    --navy:#1E2D3D; --page:#F3F2EE; --panel:#E3DFD4; --panel-edge:#D3CEC0; --amber:#E0A02E;
+    --maroon:#A01B23; --muted:#5b6670; --line:#d9d4c6; --white:#FFFFFF; --ok:#2f6b3a; --okbg:#e8f1e8; --warnbg:#fbf1dc;
+    --f-display:'Archivo Expanded','Arial Black',sans-serif;
+    --f-body:'PT Sans Caption',Arial,sans-serif;
+    --f-slab:'Roboto Slab',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--page);color:var(--navy);font-family:var(--f-body);font-size:16px;line-height:1.5}
+  a{color:var(--maroon)}
+  .test-banner{background:var(--navy);color:#fff;text-align:center;font-size:13px;padding:8px 16px}
+  header{background:var(--page);border-bottom:1px solid var(--line);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .wordmark{font-family:var(--f-display);font-weight:800;font-size:20px;letter-spacing:.02em;text-decoration:none;color:var(--navy);line-height:1}
+  .wordmark small{display:block;font-family:var(--f-body);font-weight:700;font-size:9px;letter-spacing:.2em;color:var(--muted);margin-top:3px}
+  header .q{font-size:14px;color:var(--muted)}
+  header .q a{font-weight:700;text-decoration:none}
+
+  main{max-width:640px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+
+  .intro{display:flex;flex-direction:column;gap:12px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--maroon)}
+  h1{font-size:clamp(34px,8vw,48px);line-height:1.05;margin:0;text-wrap:balance}
+  h1 .price{display:block;color:var(--maroon);font-size:1.25em}
+  .checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:17px}
+  .checks li{display:flex;gap:10px}
+  .checks li:before{content:"✓";color:var(--amber);font-weight:700}
+  .fine{font-size:14px;color:var(--muted);margin:0}
+
+  .card{background:var(--panel);box-shadow:inset 0 0 0 1px var(--panel-edge);border-top:4px solid var(--amber);padding:20px;display:flex;flex-direction:column;gap:20px}
+  .card h2{font-family:var(--f-slab);font-size:21px;margin:0}
+  .step{display:flex;flex-direction:column;gap:12px}
+  .step-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .step-head h3{margin:0;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+  .linkbtn{background:none;border:0;padding:0;font:inherit;font-size:14px;font-weight:700;color:var(--maroon);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid .full{grid-column:1/-1}
+  @media (max-width:420px){.grid{grid-template-columns:1fr}}
+  label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700;min-width:0}
+  label .opt{font-weight:400;color:var(--muted)}
+  select,input{font:inherit;font-size:16px;width:100%;min-height:48px;padding:10px 12px;border:1.5px solid #bdb6a3;border-radius:4px;background:var(--white);color:var(--navy)}
+  select:disabled{background:#efede7;color:#8a8f94}
+  select:focus,input:focus{outline:3px solid var(--amber);outline-offset:1px;border-color:var(--navy)}
+  .hint{font-size:13px;color:var(--muted);font-weight:400}
+  .status{font-size:14px;padding:10px 12px;border-radius:4px;display:none}
+  .status.show{display:block}
+  .status.ok{background:var(--okbg);color:var(--ok)}
+  .status.warn{background:var(--warnbg);color:#6d4b0e}
+  .status.err{background:#f6e3e4;color:var(--maroon)}
+  .vehicle-chip{display:none;background:var(--white);border-radius:4px;padding:10px 12px;font-weight:700}
+  .vehicle-chip.show{display:block}
+  .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:60px;border:0;border-radius:3px;background:var(--maroon);color:#fff;font:inherit;font-weight:700;font-size:18px;cursor:pointer;padding:14px 20px}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .btn:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+  .after{font-size:13px;color:var(--muted);text-align:center;margin:0}
+  .nudge{border-left:3px solid var(--amber);padding-left:12px;font-family:var(--f-slab);font-size:16px}
+  .nudge a{font-family:var(--f-body);font-weight:700}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:6px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="test-banner">Test page: not linked from the site yet. Submissions are real and go to the Notion CRM.</div>
+
+<header>
+  <a class="wordmark" href="/">HILLSIDE<small>MOBILE AUTO</small></a>
+  <span class="q">Questions? <a href="sms:+18018663466">Text 801-866-3466</a></span>
+</header>
+
+<main>
+  <section class="intro" aria-labelledby="oc-title">
+    <span class="eyebrow">Mobile Oil Change</span>
+    <h1 id="oc-title">Full-Synthetic Oil Change <span class="price">$99</span></h1>
+    <ul class="checks">
+      <li>Up to 5 quarts of full synthetic, the right spec for your car</li>
+      <li>OEM-spec filter and a new drain plug washer</li>
+      <li>Battery test, tire pressure check and walk-around</li>
+      <li>Done at your home or work in about 45 minutes</li>
+    </ul>
+    <p class="fine">Extra oil is $12 per quart over 5. Add a tire rotation, air filters or wipers when you book. $20 deposit, credited to your total.</p>
+  </section>
+
+  <form class="card" id="picker" novalidate aria-labelledby="pk-title">
+    <h2 id="pk-title">Tell me about your car</h2>
+    <p class="fine" style="margin-top:-12px">So I show up with the right oil and filter.</p>
+
+    <div class="step" id="ymm">
+      <div class="step-head">
+        <h3>Your vehicle</h3>
+        <button type="button" class="linkbtn" id="toVin">Have your VIN? Use it instead</button>
+      </div>
+      <div class="grid">
+        <label>Year<select id="year" required><option value="">Year</option></select></label>
+        <label>Make<select id="make" required disabled><option value="">Make</option></select></label>
+        <label class="full">Model<select id="model" required disabled><option value="">Model</option></select></label>
+        <label class="full">Engine<select id="engine" required disabled><option value="">Engine</option></select>
+          <span class="hint">Not sure? Pick "Not sure" and I'll confirm before your visit.</span></label>
+      </div>
+    </div>
+
+    <div class="step" id="vinStep" hidden>
+      <div class="step-head">
+        <h3>Your VIN</h3>
+        <button type="button" class="linkbtn" id="toYmm">Pick year, make and model instead</button>
+      </div>
+      <label>17-character VIN<input id="vin" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 4T1B11HK5JU123456">
+        <span class="hint">It's on your insurance card, registration, or the driver's side of the dashboard.</span></label>
+    </div>
+
+    <div class="vehicle-chip" id="chip" aria-live="polite"></div>
+    <div class="status" id="vstatus" role="status"></div>
+
+    <div class="step">
+      <div class="grid">
+        <label class="full">Approximate mileage <span class="opt">(optional, helps me pick high-mileage oil)</span><input id="miles" inputmode="numeric" placeholder="e.g. 85,000"></label>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><h3>You</h3></div>
+      <div class="grid">
+        <label>Name<input id="name" autocomplete="name" required></label>
+        <label>Mobile phone<input id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(801) 555-1234" required></label>
+      </div>
+      <span class="hint" style="margin-top:-4px">Use the same number when you book, so your car is linked to your appointment.</span>
+      <div class="hp" aria-hidden="true"><label>Website<input id="website" tabindex="-1" autocomplete="off"></label></div>
+    </div>
+
+    <div class="status" id="fstatus" role="alert"></div>
+    <button class="btn" id="go" type="submit">Book My Oil Change</button>
+    <p class="after">Next you'll pick a time, add any extras, and pay the $20 deposit on Square.</p>
+  </form>
+
+  <p class="nudge">Planning on more than one? 3 oil changes for $249 saves you $48. <a href="/#offer">See the Introductory Offer</a></p>
+</main>
+
+<script>
+(function(){
+  const WORKER = "https://hma-worker.jeremykmacdonald.workers.dev/intake";
+  const FALLBACK_BOOKING = "https://app.squareup.com/appointments/book/8vo31a3owzji1t/L7HJP6SJY1D4C/start";
+  const EPA = "https://www.fueleconomy.gov/ws/rest/vehicle/menu";
+  const IN_SCOPE = ["Acura","Buick","Cadillac","Chevrolet","Chrysler","Dodge","Ford","Genesis","GMC","Honda","Hyundai","Infiniti","Isuzu","Jeep","Kia","Lexus","Lincoln","Mazda","Mercury","Mitsubishi","Nissan","Oldsmobile","Plymouth","Pontiac","Ram","Saturn","Scion","Subaru","Suzuki","Toyota"];
+
+  const $ = (id) => document.getElementById(id);
+  const yearSel = $("year"), makeSel = $("make"), modelSel = $("model"), engSel = $("engine");
+  const cache = new Map();
+  let groups = new Map();      // base model name -> [EPA model names]
+  let mode = "ymm";            // or "vin"
+  let vinInfo = null;          // decoded VIN
+
+  const asList = (x) => (x == null ? [] : Array.isArray(x) ? x : [x]);
+  async function epa(path){
+    if (cache.has(path)) return cache.get(path);
+    const p = fetch(EPA + path, { headers: { Accept: "application/json" } })
+      .then((r) => { if (!r.ok) throw new Error("EPA " + r.status); return r.json(); })
+      .then((d) => asList(d && d.menuItem));
+    cache.set(path, p);
+    p.catch(() => cache.delete(path));
+    return p;
+  }
+
+  function fill(sel, placeholder, items, disabled){
+    sel.innerHTML = "";
+    const o = document.createElement("option"); o.value = ""; o.textContent = placeholder; sel.appendChild(o);
+    for (const it of items){
+      const op = document.createElement("option");
+      op.value = typeof it === "string" ? it : it.value;
+      op.textContent = typeof it === "string" ? it : it.text;
+      sel.appendChild(op);
+    }
+    sel.disabled = !!disabled;
+  }
+  function loading(sel, label){ fill(sel, label, [], true); }
+  function setStatus(el, kind, html){ el.className = "status show " + kind; el.innerHTML = html; }
+  function clearStatus(el){ el.className = "status"; el.innerHTML = ""; }
+
+  // EPA lists trucks under many names ("F150 Pickup 4WD FFV", "Silverado K15 4WD"). Group them under one clean name.
+  const STOP = /^(2WD|4WD|AWD|FWD|RWD|4x4|4x2|FFV|GVWR.*|BASE|PAYLOAD|\d\.\dL|[CK]\d{2,4}|Cab|Pickup|Chassis|L|LE|SE|XLE|XSE|LTD|Limited|Eco)$|\//i;
+  function baseModel(name){
+    const out = [];
+    for (const t of name.split(/\s+/)){ if (STOP.test(t)) break; out.push(t); }
+    return (out.join(" ") || name).trim();
+  }
+
+  // "Auto (S8), 6 cyl, 3.5 L, Turbo" -> "3.5L 6-cyl Turbo"
+  function engineLabel(text){
+    const parts = text.split(",").map((s) => s.trim()).filter(Boolean);
+    let disp = "", cyl = ""; const extra = [];
+    for (const p of parts){
+      let m;
+      if (/^(auto|manual)/i.test(p)) continue;
+      if ((m = p.match(/^(\d+)\s*cyl/i))) cyl = m[1] + "-cyl";
+      else if ((m = p.match(/^(\d+(?:\.\d+)?)\s*L$/i))) disp = parseFloat(m[1]).toFixed(1) + "L";
+      else extra.push(...p.split(";").map((x) => x.trim()));
+    }
+    if (!disp && !cyl) return "Electric";
+    // Keep only what matters for oil and filters; drop marketing/transmission notes (SIDI, XFE, eTorque...).
+    const keep = [];
+    for (const x of extra){
+      if (/diesel/i.test(x)) keep.push("Diesel");
+      else if (/turbo/i.test(x)) keep.push("Turbo");
+      else if (/supercharg/i.test(x)) keep.push("Supercharged");
+      else if (/plug-in|phev/i.test(x)) keep.push("Plug-in Hybrid");
+      else if (/hybrid/i.test(x)) keep.push("Hybrid");
+    }
+    return [disp, cyl, ...new Set(keep)].filter(Boolean).join(" ");
+  }
+
+  async function initYears(){
+    loading(yearSel, "Loading…");
+    try{
+      const ys = (await epa("/year")).map((y) => y.value).filter((y) => +y >= 2000);
+      fill(yearSel, "Year", ys, false);
+    }catch(e){
+      const ys = []; const now = new Date().getFullYear() + 1;
+      for (let y = now; y >= 2000; y--) ys.push(String(y));
+      fill(yearSel, "Year", ys, false);
+    }
+  }
+
+  yearSel.addEventListener("change", async () => {
+    fill(modelSel, "Model", [], true); fill(engSel, "Engine", [], true); clearStatus($("vstatus")); updateChip();
+    if (!yearSel.value){ fill(makeSel, "Make", [], true); return; }
+    loading(makeSel, "Loading makes…");
+    try{
+      const makes = (await epa("/make?year=" + yearSel.value)).map((m) => m.text);
+      const inScope = makes.filter((m) => IN_SCOPE.some((x) => x.toLowerCase() === m.toLowerCase()));
+      fill(makeSel, "Make", [...inScope, { text: "Other make", value: "__other" }], false);
+    }catch(e){ epaDown(); }
+  });
+
+  makeSel.addEventListener("change", async () => {
+    fill(engSel, "Engine", [], true); clearStatus($("vstatus")); updateChip();
+    if (!makeSel.value){ fill(modelSel, "Model", [], true); return; }
+    if (makeSel.value === "__other"){
+      fill(modelSel, "Model", [], true);
+      setStatus($("vstatus"), "warn", "I currently service most domestic, Japanese and Korean vehicles. <a href=\"sms:+18018663466\">Text me</a> your year, make and model and I'll see if I can help.");
+      return;
+    }
+    loading(modelSel, "Loading models…");
+    try{
+      const names = (await epa("/model?year=" + yearSel.value + "&make=" + encodeURIComponent(makeSel.value))).map((m) => m.text);
+      groups = new Map();
+      for (const n of names){ const b = baseModel(n); if (!groups.has(b)) groups.set(b, []); groups.get(b).push(n); }
+      const bases = [...groups.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      fill(modelSel, "Model", [...bases, { text: "Don't see your model?", value: "__missing" }], false);
+    }catch(e){ epaDown(); }
+  });
+
+  modelSel.addEventListener("change", async () => {
+    clearStatus($("vstatus")); updateChip();
+    if (!modelSel.value){ fill(engSel, "Engine", [], true); return; }
+    if (modelSel.value === "__missing"){
+      fill(engSel, "Engine", [], true);
+      setStatus($("vstatus"), "warn", "Heavy-duty trucks (like an F-250 or Ram 2500) aren't in this list. <button type=\"button\" class=\"linkbtn\" data-vin>Use your VIN instead</button>.");
+      return;
+    }
+    loading(engSel, "Loading engines…");
+    try{
+      const variants = groups.get(modelSel.value) || [modelSel.value];
+      const lists = await Promise.all(variants.map((v) =>
+        epa("/options?year=" + yearSel.value + "&make=" + encodeURIComponent(makeSel.value) + "&model=" + encodeURIComponent(v)).catch(() => [])));
+      const seen = new Set(); const engines = [];
+      for (const o of lists.flat()){ const l = engineLabel(o.text); if (!seen.has(l)){ seen.add(l); engines.push(l); } }
+      engines.sort((a, b) => (parseFloat(a) || 99) - (parseFloat(b) || 99));
+      const items = engines.map((e) => ({ text: e, value: e }));
+      items.push({ text: "Not sure", value: "__unsure" });
+      fill(engSel, engines.length === 1 ? "Engine" : "Pick your engine", items, false);
+      if (engines.length === 1){ engSel.value = engines[0]; engSel.dispatchEvent(new Event("change")); }
+    }catch(e){ epaDown(); }
+  });
+
+  engSel.addEventListener("change", () => {
+    clearStatus($("vstatus"));
+    const v = engSel.value;
+    if (/diesel/i.test(v)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
+    else if (v === "Electric") setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes.");
+    updateChip();
+  });
+
+  function epaDown(){
+    setStatus($("vstatus"), "warn", "The vehicle list isn't loading right now. <button type=\"button\" class=\"linkbtn\" data-vin>Use your VIN instead</button>, or continue and I'll confirm your car before the visit.");
+  }
+
+  // VIN mode
+  function setMode(m){
+    mode = m;
+    $("ymm").hidden = m !== "ymm";
+    $("vinStep").hidden = m !== "vin";
+    clearStatus($("vstatus")); updateChip();
+    if (m === "vin") $("vin").focus();
+  }
+  $("toVin").addEventListener("click", () => setMode("vin"));
+  $("toYmm").addEventListener("click", () => setMode("ymm"));
+  document.addEventListener("click", (e) => { if (e.target.matches("[data-vin]")) setMode("vin"); });
+
+  let vinTimer;
+  $("vin").addEventListener("input", (e) => {
+    const v = e.target.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, "");
+    e.target.value = v; vinInfo = null; updateChip(); clearStatus($("vstatus"));
+    clearTimeout(vinTimer);
+    if (v.length === 17) vinTimer = setTimeout(() => decodeVin(v), 150);
+  });
+  async function decodeVin(vin){
+    setStatus($("vstatus"), "ok", "<span class=\"spin\"></span>Looking up your VIN…");
+    try{
+      const r = await fetch("https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/" + vin + "?format=json");
+      const d = (await r.json()).Results[0];
+      if (!d.Make || !d.ModelYear) throw new Error("no match");
+      const disp = d.DisplacementL ? parseFloat(d.DisplacementL).toFixed(1) + "L" : "";
+      const cyl = d.EngineCylinders ? d.EngineCylinders + "-cyl" : "";
+      const turbo = /yes/i.test(d.Turbo || "") ? "Turbo" : "";
+      vinInfo = { year: d.ModelYear, make: d.Make, model: d.Model, engine: [disp, cyl, turbo].filter(Boolean).join(" "), fuel: d.FuelTypePrimary || "" };
+      clearStatus($("vstatus"));
+      if (/diesel/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
+      updateChip();
+    }catch(e){
+      setStatus($("vstatus"), "warn", "I couldn't decode that VIN. Double-check it, or switch back to year, make and model.");
+    }
+  }
+
+  function titleCase(s){ return String(s || "").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()); }
+  function currentVehicle(){
+    if (mode === "vin") return vinInfo ? { year: vinInfo.year, make: titleCase(vinInfo.make), model: vinInfo.model, engine: vinInfo.engine, vin: $("vin").value } : null;
+    if (!yearSel.value || !makeSel.value || makeSel.value === "__other" || !modelSel.value || modelSel.value === "__missing" || !engSel.value) return null;
+    return { year: yearSel.value, make: makeSel.value, model: modelSel.value, engine: engSel.value === "__unsure" ? "" : engSel.value };
+  }
+  function updateChip(){
+    const v = currentVehicle(); const chip = $("chip");
+    if (!v){ chip.className = "vehicle-chip"; chip.textContent = ""; return; }
+    chip.className = "vehicle-chip show";
+    chip.textContent = "✓ " + [v.year, v.make, v.model].join(" ") + (v.engine ? " · " + v.engine : " · engine to confirm");
+  }
+
+  // Phone formatting
+  $("phone").addEventListener("input", (e) => {
+    const d = e.target.value.replace(/\D/g, "").replace(/^1/, "").slice(0, 10);
+    e.target.value = d.length > 6 ? `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0,3)}) ${d.slice(3)}` : d;
+  });
+
+  // Submit: save to the worker, then send to Square
+  $("picker").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fs = $("fstatus"); clearStatus(fs);
+    const v = currentVehicle();
+    const name = $("name").value.trim();
+    const digits = $("phone").value.replace(/\D/g, "");
+    if (!v){ setStatus(fs, "err", mode === "vin" ? "Enter a full 17-character VIN, or switch to year, make and model." : "Pick your year, make, model and engine (or \"Not sure\")."); return; }
+    if (!name){ setStatus(fs, "err", "Add your name."); $("name").focus(); return; }
+    if (digits.length !== 10){ setStatus(fs, "err", "Add a 10-digit mobile number."); $("phone").focus(); return; }
+
+    const btn = $("go"); btn.disabled = true; btn.innerHTML = "<span class=\"spin\"></span>Saving your car…";
+    const body = { name, phone: digits, year: v.year, make: v.make, model: v.model, engine: v.engine, vin: v.vin || "", mileage: $("miles").value, website: $("website").value };
+    try{
+      const r = await fetch(WORKER, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const d = await r.json().catch(() => ({}));
+      if (d.status === "out_of_scope"){
+        btn.disabled = false; btn.textContent = "Book My Oil Change";
+        setStatus(fs, "warn", "Thanks, I've got your info. This vehicle needs a quick check before booking. <a href=\"sms:+18018663466\">Text me</a> and I'll get back to you fast.");
+        return;
+      }
+      if (!r.ok || !d.ok) throw new Error(d.error || "save failed");
+      btn.innerHTML = "<span class=\"spin\"></span>Opening booking…";
+      window.location.href = d.next || FALLBACK_BOOKING;
+    }catch(err){
+      // Never block a booking because the save failed. Jeremy's prep list will flag the missing car.
+      btn.disabled = false; btn.textContent = "Book My Oil Change";
+      setStatus(fs, "warn", "I couldn't save your car details just now. <a href=\"" + FALLBACK_BOOKING + "\">Continue to booking anyway</a> and I'll confirm your car by text.");
+    }
+  });
+
+  initYears();
+})();
+</script>
+</body>
+</html>
