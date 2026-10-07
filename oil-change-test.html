@@ -29,7 +29,42 @@
   header .q{font-size:14px;color:var(--muted)}
   header .q a{font-weight:700;text-decoration:none}
 
-  main{max-width:640px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+  main{display:block}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  .sec{padding-block:40px 56px;scroll-margin-top:0}
+  .sec-alt{background:#FAF9F6;border-top:1px solid var(--line)}
+  .wrap{max-width:980px;margin:0 auto;padding-inline:20px;display:flex;flex-direction:column;gap:28px}
+  .wrap.narrow{max-width:640px}
+  .h1{font-size:clamp(32px,8vw,46px);line-height:1.05;margin:0;text-wrap:balance}
+  .h1 .price{display:block;color:var(--maroon);font-size:1.3em}
+  .h2{font-family:var(--f-slab);font-size:clamp(26px,6vw,34px);line-height:1.15;margin:0}
+  .lede{margin:0;font-size:18px;font-family:var(--f-slab)}
+  .incl{display:grid;gap:22px}
+  .incl-h{margin:0 0 8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  #picker{scroll-margin-top:16px}
+  .grp{margin:8px 0 -12px;font-family:var(--f-slab);font-size:20px;padding-bottom:8px;border-bottom:2px solid var(--amber)}
+  .svc-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media (min-width:760px){.svc-grid{grid-template-columns:1fr 1fr}}
+  .svc{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px}
+  .svc p{margin:0}
+  .svc-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .svc-top h4{margin:0;font-size:17px;line-height:1.25}
+  .svc-price{margin:0;font-weight:700;color:var(--maroon);font-size:18px;white-space:nowrap}
+  .svc-price span{font-size:13px;font-weight:400;color:var(--muted)}
+  .svc-note{font-size:14px;color:var(--muted)}
+  .mini{border-collapse:collapse;font-size:15px;width:100%;max-width:340px}
+  .mini th,.mini td{text-align:left;padding:6px 8px 6px 0;border-bottom:1px solid var(--line)}
+  .mini thead th{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .mini td{font-weight:700}
+  .seasons{display:grid;gap:12px}
+  @media (min-width:760px){.seasons{grid-template-columns:repeat(3,1fr)}}
+  .season{background:var(--page);border-radius:4px;padding:14px}
+  .season h5{margin:0;font-size:16px}
+  .season .when{margin:2px 0 8px;font-size:13px;color:var(--muted)}
+  .checks.sm{font-size:15px;gap:4px}
+  .back{display:flex;justify-content:center;padding-top:4px}
+  .btn-ghost{background:transparent;color:var(--maroon);box-shadow:inset 0 0 0 2px var(--maroon);text-decoration:none;max-width:420px;min-height:52px;font-size:17px}
 
   .intro{display:flex;flex-direction:column;gap:12px}
   .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--maroon)}
@@ -88,19 +123,44 @@
 </header>
 
 <main>
-  <section class="intro" aria-labelledby="oc-title">
-    <span class="eyebrow">Mobile Oil Change</span>
-    <h1 id="oc-title">Full-Synthetic Oil Change <span class="price">$99</span></h1>
-    <ul class="checks">
-      <li>Up to 5 quarts of full synthetic, the right spec for your car</li>
-      <li>OEM-spec filter and a new drain plug washer</li>
-      <li>Battery test, tire pressure check and walk-around</li>
-      <li>Done at your home or work in about 45 minutes</li>
-    </ul>
-    <p class="fine">Extra oil is $12 per quart over 5. Add a tire rotation, air filters or wipers when you book. $20 deposit, credited to your total.</p>
-  </section>
+  <!-- ============ $99 OIL CHANGE (hero "Still unsure?" link jumps here) ============ -->
+  <section id="oil-change" class="sec" aria-labelledby="oc-title">
+    <div class="wrap narrow">
+      <div class="intro">
+        <span class="eyebrow">Mobile Oil Change</span>
+        <h2 class="h1" id="oc-title">Full-Synthetic Oil Change <span class="price">$99</span></h2>
+        <p class="lede">At your home or work, in about 45 minutes.</p>
+      </div>
 
-  <form class="card" id="picker" novalidate aria-labelledby="pk-title">
+      <div class="incl">
+        <div>
+          <h3 class="incl-h">The oil change</h3>
+          <ul class="checks">
+            <li>Up to 5 quarts of full-synthetic oil</li>
+            <li>High-mileage formula for vehicles over 75,000 miles, no extra charge</li>
+            <li>OEM or OEM-spec oil filter</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="incl-h">While I'm here</h3>
+          <ul class="checks">
+            <li>Battery test</li>
+            <li>Tire pressure check &amp; fill</li>
+            <li>Washer fluid topped off</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="incl-h">What you get back</h3>
+          <ul class="checks">
+            <li>Printed service record with your tire, tread and battery readings</li>
+            <li>Windshield reminder for your next change</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="fine">Each quart of oil beyond 5 quarts costs an additional $12.</p>
+
+      <form class="card" id="picker" novalidate aria-labelledby="pk-title">
     <h2 id="pk-title">Tell me about your car</h2>
     <p class="fine" style="margin-top:-12px">So I show up with the right oil and filter.</p>
 
@@ -145,9 +205,101 @@
     <div class="status" id="fstatus" role="alert"></div>
     <button class="btn" id="go" type="submit">Book My Oil Change</button>
     <p class="after">Next you'll pick a time, add any extras, and pay the $20 deposit on Square.</p>
+    <p class="after">Booking a tire rotation, seasonal package or inspection on its own? Use this same form. You'll pick the service on the next screen.</p>
   </form>
 
-  <p class="nudge">Planning on more than one? 3 oil changes for $249 saves you $48. <a href="/#offer">See the Introductory Offer</a></p>
+      <p class="nudge">Planning on more than one? 3 oil changes for $249 saves you $48. <a href="/#offer">See the Introductory Offer</a></p>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES & ADD-ONS ============ -->
+  <section id="services" class="sec sec-alt" aria-labelledby="svc-title">
+    <div class="wrap">
+      <div class="intro">
+        <span class="eyebrow">Services</span>
+        <h2 class="h2" id="svc-title">Add-ons and other services</h2>
+        <p class="lede">Prices include parts and installation. Add any of these when you book your oil change.</p>
+      </div>
+
+      <h3 class="grp">Add to your oil change</h3>
+      <div class="svc-grid">
+        <article class="svc">
+          <div class="svc-top"><h4>Tire Rotation</h4><p class="svc-price">$35 <span>with an oil change</span></p></div>
+          <p>Moves your tires around so they wear evenly and last longer. With the wheels off, I also check tread depth, set tire pressure, and take a look at your brake pads.</p>
+          <p class="svc-note">$65 on its own. If a tire is unsafe to rotate (badly uneven wear, dry rot, or worn-out tread), I'll skip it, note it on your card, and you won't be charged.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Cabin Air Filter Service</h4><p class="svc-price">$45</p></div>
+          <p>This filter cleans the air coming through your vents. A clogged one means weak airflow, foggy windows and musty smells. New filter, installed.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Engine Air Filter Service</h4><p class="svc-price">$40 <span>car or small SUV</span></p></div>
+          <p>Keeps dust and dirt out of your engine. A dirty one can cost you power and fuel mileage. New filter, installed.</p>
+          <p class="svc-note">$55 for a truck or larger SUV.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Wiper Blades</h4><p class="svc-price">from $34</p></div>
+          <p>New blades, installed. Standard blades are dependable everyday rubber blades. Premium blades are silicone, which lasts longer.</p>
+          <table class="mini">
+            <thead><tr><th></th><th>Fronts</th><th>Fronts + back</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Standard</th><td>$34</td><td>$48</td></tr>
+              <tr><th scope="row">Premium</th><td>$54</td><td>$68</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Battery Replacement, Install</h4><p class="svc-price">$25</p></div>
+          <p>You bring the battery and I'll install it. Your battery gets tested at every oil change, so you'll know when it's getting weak.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Additional Quart of Oil</h4><p class="svc-price">$12 <span>per quart</span></p></div>
+          <p>Most cars take 5 quarts or less. Some trucks and bigger engines take more. Each quart of oil beyond 5 quarts costs an additional $12.</p>
+        </article>
+      </div>
+
+      <h3 class="grp">Seasonal packages</h3>
+      <div class="svc svc-wide">
+        <div class="svc-top"><h4>Get your car ready for the season ahead</h4><p class="svc-price">$69 <span>with an oil change</span></p></div>
+        <p>About 90 minutes. $89 on its own, no oil change needed. Every package includes a battery test, a tire rotation (with tread, pressure and brake pad checks), fluid top-offs, a wiper check, and a check-engine code scan. Each season adds:</p>
+        <div class="seasons">
+          <div class="season">
+            <h5>Spring Refresh</h5><p class="when">March and April</p>
+            <ul class="checks sm"><li>Underbody check for winter salt and rust</li></ul>
+          </div>
+          <div class="season">
+            <h5>Summer Road-Trip Ready</h5><p class="when">May and June</p>
+            <ul class="checks sm"><li>Coolant condition check</li><li>A/C vent temperature check (I don't recharge A/C)</li></ul>
+          </div>
+          <div class="season">
+            <h5>Winter Storm Prep</h5><p class="when">October and November</p>
+            <ul class="checks sm"><li>Coolant freeze-point check</li><li>Washer fluid swapped to winter-rated</li></ul>
+          </div>
+        </div>
+        <p class="svc-note">Wiper blades are extra if yours need replacing.</p>
+      </div>
+
+      <h3 class="grp">Buying a used car?</h3>
+      <div class="svc-grid">
+        <article class="svc">
+          <div class="svc-top"><h4>Pre-Purchase Inspection, Basic</h4><p class="svc-price">$89</p></div>
+          <p>About 45 minutes at the seller's location. A careful visual check with photos and a full code scan, plus a printed report. No lifting the car.</p>
+        </article>
+        <article class="svc">
+          <div class="svc-top"><h4>Pre-Purchase Inspection, Comprehensive</h4><p class="svc-price">$199</p></div>
+          <p>About 90 minutes. A full scan of every computer module, a fluid and engine bay check, all four wheels off to measure brakes, an underbody and frame check (with a camera inside the frame rails), tire wear, electrical and paint checks, and a 10-minute test drive. Printed report with photos.</p>
+          <p class="svc-note">$40 deposit. Findings only: what you do with them is your call. The seller has to agree to the inspection and test drive.</p>
+        </article>
+      </div>
+
+      <div class="back"><a class="btn btn-ghost" href="#picker">Tell me about your car and book</a></div>
+    </div>
+  </section>
 </main>
 
 <script>
