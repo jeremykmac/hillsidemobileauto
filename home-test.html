@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Hillside Mobile Auto | Mobile Oil Changes in Cache Valley</title>
+<meta name="description" content="Full-synthetic oil changes at your home or work in Cache Valley, Utah. 3 oil changes for $249, or a single oil change for $99.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@800&family=PT+Sans+Caption:wght@400;700&family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<div class="test-banner">Test page: not linked from the site yet. Submissions are real and go to the Notion CRM.</div>
+
+<header class="s-head">
+  <a class="badge-link" href="/" aria-label="Hillside Mobile Auto home"><img src="assets/badge.svg" alt="Hillside Mobile Auto" width="907" height="376"></a>
+  <nav class="s-nav" aria-label="Main"><a class="o" href="#offer">Introductory Offer</a><a href="#oil-change">Oil Change · $99</a><a href="sms:+18018663466">Call / Text</a></nav>
+  <a class="s-text" href="sms:+18018663466">Call / Text</a>
+</header>
+
+<main>
+  <!-- ============ HERO: INTRODUCTORY OFFER (door hanger QR lands here) ============ -->
+  <section id="offer" aria-labelledby="offer-title">
+    <div class="hero">
+      <div class="copy">
+        <div class="grp pitch">
+          <span class="chip">Introductory Offer · Only 50 Available</span>
+          <h1 class="s-h1" id="offer-title">3 Oil Changes<br><span class="price-hl">Just $249</span></h1>
+          <ul class="checks"><li>3 full-synthetic oil changes</li><li>1 free air filter</li><li>1 free tire rotation</li><li>10% off other services for a year</li></ul>
+        </div>
+        <div class="grp buy">
+          <p class="value"><b>Over $380 in value.</b> Use within 18 months.</p>
+          <label class="agree"><input type="checkbox" id="agreeOffer"> <span>I've read and agree to the <a href="/introductory-offer-terms.html" target="_blank" rel="noopener">Offer Terms</a>.</span></label>
+          <a class="btn is-off" id="claim" href="https://square.link/u/TLJPELes" aria-disabled="true">Claim the Introductory Offer</a>
+          <p class="elig">Fits most 2000+ domestic, Japanese &amp; Korean gas vehicles. Not sure about yours? Text me the year, make &amp; model <b>before you buy</b>: <a href="sms:+18018663466">801-866-3466</a>.</p>
+        </div>
+        <figure class="fig">
+          <div class="media"><img src="assets/hero-door-hangers.jpg" alt="Hillside Mobile Auto door hangers on a kitchen counter" width="1000" height="914"></div>
+          <figcaption class="plate"><p class="plate-by">My Promise</p><p class="plate-q">If your first oil change doesn't win you over, I'll refund the rest of your package.</p></figcaption>
+        </figure>
+        <div class="grp assure"><p class="alt">Still unsure? <a href="#oil-change">Click here to book a standard oil change</a>, and let us earn your trust.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ $99 OIL CHANGE (hero "Still unsure?" link jumps here) ============ -->
+  <section id="oil-change" class="sec" aria-labelledby="oc-title">
+    <div class="wrap narrow">
+      <div class="intro">
+        <span class="eyebrow">Mobile Oil Change</span>
+        <h2 class="h1" id="oc-title">Full-Synthetic Oil Change <span class="price">$99</span></h2>
+        <p class="lede">At your home or work, in about 45 minutes.</p>
+      </div>
+
+      <div class="incl">
+        <div>
+          <h3 class="incl-h">The oil change</h3>
+          <ul class="checks">
+            <li>Up to 5 quarts of full-synthetic oil</li>
+            <li>High-mileage formula for vehicles over 75,000 miles, no extra charge</li>
+            <li>OEM or OEM-spec oil filter</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="incl-h">While I'm here</h3>
+          <ul class="checks">
+            <li>Battery test</li>
+            <li>Tire pressure check &amp; fill</li>
+            <li>Washer fluid topped off</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="incl-h">What you get back</h3>
+          <ul class="checks">
+            <li>Printed service record with your tire, tread and battery readings</li>
+            <li>Windshield reminder for your next change</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="fine">Each quart of oil beyond 5 quarts costs an additional $12.</p>
+
+      <form class="card" id="picker" novalidate aria-labelledby="pk-title">
+    <h2 id="pk-title">Tell me about your car</h2>
+    <p class="fine" style="margin-top:-12px">So I show up with the right oil and filter.</p>
+
+    <div class="step">
+      <div class="step-head"><h3>Your vehicle</h3></div>
+      <div class="tabs" role="tablist" aria-label="How to enter your vehicle">
+        <button type="button" role="tab" id="tabYmm" aria-selected="true" aria-controls="ymm">Year / Make / Model</button>
+        <button type="button" role="tab" id="tabVin" aria-selected="false" aria-controls="vinStep" tabindex="-1">VIN</button>
+      </div>
+      <div class="grid" id="ymm" role="tabpanel" aria-labelledby="tabYmm">
+        <label>Year<select id="year" required><option value="">Year</option></select></label>
+        <label>Make<select id="make" required disabled><option value="">Make</option></select></label>
+        <label class="full">Model<select id="model" required disabled><option value="">Model</option></select></label>
+        <label class="full">Engine<select id="engine" required disabled><option value="">Engine</option></select>
+          <span class="hint">Not sure? Pick "Not sure" and I'll confirm before your visit.</span></label>
+      </div>
+      <div id="vinStep" role="tabpanel" aria-labelledby="tabVin" hidden>
+        <label>17-character VIN<input id="vin" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 4T1B11HK5JU123456">
+          <span class="hint">Most accurate. It's on your insurance card, registration, or the driver's side of the dashboard.</span></label>
+      </div>
+    </div>
+
+    <div class="vehicle-chip" id="chip" aria-live="polite"></div>
+    <div class="status" id="vstatus" role="status"></div>
+
+    <div class="step">
+      <div class="grid">
+        <label class="full">Approximate mileage <span class="opt">(optional, helps me pick high-mileage oil)</span><input id="miles" inputmode="numeric" placeholder="e.g. 85,000"></label>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><h3>You</h3></div>
+      <div class="grid">
+        <label>Name<input id="name" autocomplete="name" required></label>
+        <label>Mobile phone<input id="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(801) 555-1234" required></label>
+      </div>
+      <span class="hint" style="margin-top:-4px">Use the same number when you book, so your car is linked to your appointment.</span>
+      <div class="hp" aria-hidden="true"><label>Website<input id="website" tabindex="-1" autocomplete="off"></label></div>
+    </div>
+
+    <label class="agree"><input type="checkbox" id="agreeService"> <span>I've read and agree to the <a href="/terms.html" target="_blank" rel="noopener">Service Terms</a>.</span></label>
+    <div class="status" id="fstatus" role="alert"></div>
+    <button class="btn" id="go" type="submit" disabled>Book My Oil Change</button>
+    <p class="after">Next you'll pick a time, add any extras, and pay the $20 deposit on Square.</p>
+  </form>
+
+      <p class="nudge">Like to plan ahead? Get 3 oil changes for only $249. <a href="#offer">See the Introductory Offer</a></p>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES & ADD-ONS ============ -->
+  <section id="services" class="sec sec-alt" aria-labelledby="svc-title">
+    <div class="wrap">
+      <div class="intro">
+        <span class="eyebrow">Services</span>
+        <h2 class="h2" id="svc-title">Add-ons and other services</h2>
+        <p class="lede">Prices include parts and installation. Use the form above to tell me about your car and book any of these services.</p>
+      </div>
+
+      <h3 class="grp-h">Add to your oil change</h3>
+      <div class="svc-grid">
+        <article class="svc">
+          <div class="svc-top"><h4>Tire Rotation</h4><p class="svc-price">$65</p></div>
+          <p>Rotating your tires means more even tread wear, longer tire life, and better grip. Includes a tread depth, air pressure, and brake-pad check while the wheels are off.</p>
+          <p class="svc-note">$65 on its own<br>$35 with an oil change</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Cabin Air Filter Service</h4><p class="svc-price">$45</p></div>
+          <p>Don't skimp on the air you breathe. A new cabin air filter and duct treatment means no more AC funk or guessing where that filter's hiding.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Engine Air Filter Service</h4><p class="svc-price">$40</p></div>
+          <p>Your engine breathes too. A fresh engine air filter and a cleaned-out air box keep dust and grit out and airflow strong, so your car can run its best.</p>
+          <p class="svc-note">$40 car or small SUV<br>$55 truck or SUV</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Battery Replacement, Install</h4><p class="svc-price">$25</p></div>
+          <p>Bring the battery you want and it goes in right, cables cleaned and checked for a tight, corrosion-free fit so it seats solid and starts strong. No dealer trip, no overpaying to swap a battery. All for one flat fee.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Standard Wiper Blades</h4><p class="svc-price">$34</p></div>
+          <p>Quality all-season beam blades that provide a clean streak-free wipe, fitted and installed.</p>
+          <p class="svc-note">$34 fronts only<br>$48 fronts + back</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Premium Wiper Blades</h4><p class="svc-price">$54</p></div>
+          <p>Premium silicone beam blades, tough enough for Cache Valley winters, provide a clean streak-free wipe, fitted and installed.</p>
+          <p class="svc-note">$54 fronts only<br>$68 fronts + back</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Additional Quart of Oil</h4><p class="svc-price">$12</p></div>
+          <p>Most cars take 5 quarts or less. Some trucks and bigger engines take more. Each quart of oil beyond 5 quarts costs an additional $12.</p>
+        </article>
+      </div>
+
+      <h3 class="grp-h">Seasonal packages</h3>
+      <p class="fine grp-sub">No oil change needed. About 90 minutes each.</p>
+      <div class="svc-grid three">
+        <article class="svc">
+          <div class="svc-top"><h4>Spring Refresh</h4><p class="svc-price">$89</p></div>
+          <p>Shake off winter. A post-thaw once-over to catch what the cold and roads left behind, so you head into spring with no surprises.</p>
+          <ul class="checks sm">
+            <li>Battery test</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake, washer)</li>
+            <li>Full code scan</li>
+            <li>Undercarriage look for road-salt corrosion</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Summer Road-Trip Ready</h4><p class="svc-price">$89</p></div>
+          <p>Before you load up and go. Heat and long miles are hard on a car, so this gets yours road-trip ready before you find out the hard way.</p>
+          <ul class="checks sm">
+            <li>Battery test (heat kills batteries faster than cold)</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Coolant level and condition check</li>
+            <li>A/C vent check, so you know the cold air's actually flowing</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake, washer)</li>
+            <li>Full code scan</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
+
+        <article class="svc">
+          <div class="svc-top"><h4>Winter Storm Prep</h4><p class="svc-price">$89</p></div>
+          <p>Before the first freeze, get set for Cache Valley winter on your terms and not stuck waiting in the cold.</p>
+          <ul class="checks sm">
+            <li>Battery test (cold is where weak batteries die)</li>
+            <li>Tire rotation with tread, pressure, and brake-pad checks</li>
+            <li>Coolant freeze-point check</li>
+            <li>Washer fluid swapped to winter-rated</li>
+            <li>Wiper inspection</li>
+            <li>Top off common fluids as needed (coolant, power steering, brake)</li>
+            <li>Full code scan</li>
+          </ul>
+          <p class="svc-save">Save $20 when booked during an oil change visit.</p>
+        </article>
+      </div>
+
+      <h3 class="grp-h">Buying a used car?</h3>
+      <div class="svc-grid top">
+        <article class="svc">
+          <div class="svc-top"><h4>Pre-Purchase Inspection, Basic</h4><p class="svc-price">$89</p></div>
+          <p>Thinking about a used car? Get an expert's eyes on it before any money changes hands. A full visual once-over and a complete computer scan, done wherever the car's parked, with a printed report giving you an honest, objective read on the car as it stands the day it's inspected. The scan even shows if a seller cleared codes right before you arrived, so nothing hides. Just the facts, no sales pitch, and the decision stays yours.</p>
+        </article>
+        <article class="svc">
+          <div class="svc-top"><h4>Pre-Purchase Inspection, Comprehensive</h4><p class="svc-price">$199</p></div>
+          <p>No one likes buying a lemon. Know what you're getting into before you buy. Done wherever the car's parked, this is the full workup, with a printed photo report you keep:</p>
+          <ul class="checks sm">
+            <li>Full computer scan of every module, plus confirmation the emissions monitors read "Ready" (so a seller can't clear codes right before you arrive to hide a problem)</li>
+            <li>Fluids and engine bay audited for leaks and wear</li>
+            <li>All four wheels pulled to measure true brake and rotor wear</li>
+            <li>Underbody checked for frame damage and hidden rust</li>
+            <li>Tires, lights, and electronics checked</li>
+            <li>Road test for how it actually drives (with the seller's OK)</li>
+          </ul>
+          <p>About 90 minutes and a clear, objective picture of the car as it stands on inspection day, so you walk in with the facts, and the leverage, before you sign. You make the call; the report shows you what's really there.</p>
+          <p class="svc-save">Take advantage of the $199 introductory price before it goes up.</p>
+        </article>
+      </div>
+
+      <div class="back"><a class="btn btn-ghost" href="#picker">Tell me about your car and book</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="ridge-wrap" aria-hidden="true"><svg class="ridge" viewBox="0 0 1067 160" preserveAspectRatio="none"><path d="M0,160l0,-12l85,-56l26,-31l60,16l107,-44l64,23l51,-18l51,8l95,-38l126,57l133,-13l82,45l65,-37l122,89l0,12Z" fill="#1E2D3D"/></svg></div>
+  <div class="foot">
+    <div class="foot-in">
+      <img src="assets/badge.svg" alt="Hillside Mobile Auto" width="907" height="376">
+      <p class="area">Based in Nibley, serving Cache Valley from Wellsville to Smithfield</p>
+      <p class="contact">Call or text <a href="sms:+18018663466">801-866-3466</a> · <a href="mailto:hi@hillsidemobileauto.com">hi@hillsidemobileauto.com</a></p>
+      <p class="links"><a href="/terms.html">Service Terms</a><a href="/introductory-offer-terms.html">Introductory Offer Terms</a></p>
+      <p class="copy-r">© 2026 Hillside Mobile Auto, LLC</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/home.js"></script>
+</body>
+</html>
