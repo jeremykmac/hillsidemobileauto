@@ -19,6 +19,8 @@ img{max-width:100%;display:block}
 /* ---------- header ---------- */
 .s-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--page)}
 .badge-link img{height:46px;width:auto}
+.s-tag{flex:1;margin:0;text-align:center;font-family:var(--f-slab);font-style:italic;font-weight:400;font-size:13px;line-height:1.25;color:var(--navy);text-wrap:balance}
+@media (max-width:360px){.s-tag{font-size:12px}}
 .s-nav{display:none;gap:22px;font-size:14px;font-weight:700}
 .s-nav a{color:var(--navy);text-decoration:none}
 .s-nav a.o{color:var(--maroon)}
@@ -154,6 +156,7 @@ select:focus,input:focus{outline:3px solid var(--amber);outline-offset:1px;borde
 @media (min-width:820px){
   .s-head{padding:12px 48px}
   .badge-link img{height:56px}
+  .s-tag{font-size:21px}
   .s-nav{display:flex}
   .s-text{display:none}
   .hero{padding:48px;display:grid;grid-template-columns:1fr 1fr;column-gap:56px;row-gap:30px;grid-template-rows:auto auto 1fr}
