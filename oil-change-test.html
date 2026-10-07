@@ -46,6 +46,10 @@
   .step-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .step-head h3{margin:0;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
   .linkbtn{background:none;border:0;padding:0;font:inherit;font-size:14px;font-weight:700;color:var(--maroon);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .tabs{display:grid;grid-template-columns:1.7fr 1fr;background:#cfc9b8;border-radius:6px;padding:4px;gap:4px}
+  .tabs [role=tab]{font:inherit;font-size:14px;white-space:nowrap;padding:0 8px;font-weight:700;border:0;border-radius:4px;min-height:44px;background:transparent;color:var(--navy);cursor:pointer}
+  .tabs [role=tab][aria-selected=true]{background:var(--white);box-shadow:0 1px 2px rgba(30,45,61,.18)}
+  .tabs [role=tab]:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .grid .full{grid-column:1/-1}
   @media (max-width:420px){.grid{grid-template-columns:1fr}}
@@ -100,27 +104,23 @@
     <h2 id="pk-title">Tell me about your car</h2>
     <p class="fine" style="margin-top:-12px">So I show up with the right oil and filter.</p>
 
-    <div class="step" id="ymm">
-      <div class="step-head">
-        <h3>Your vehicle</h3>
-        <button type="button" class="linkbtn" id="toVin">Have your VIN? Use it instead</button>
+    <div class="step">
+      <div class="step-head"><h3>Your vehicle</h3></div>
+      <div class="tabs" role="tablist" aria-label="How to enter your vehicle">
+        <button type="button" role="tab" id="tabYmm" aria-selected="true" aria-controls="ymm">Year / Make / Model</button>
+        <button type="button" role="tab" id="tabVin" aria-selected="false" aria-controls="vinStep" tabindex="-1">VIN</button>
       </div>
-      <div class="grid">
+      <div class="grid" id="ymm" role="tabpanel" aria-labelledby="tabYmm">
         <label>Year<select id="year" required><option value="">Year</option></select></label>
         <label>Make<select id="make" required disabled><option value="">Make</option></select></label>
         <label class="full">Model<select id="model" required disabled><option value="">Model</option></select></label>
         <label class="full">Engine<select id="engine" required disabled><option value="">Engine</option></select>
           <span class="hint">Not sure? Pick "Not sure" and I'll confirm before your visit.</span></label>
       </div>
-    </div>
-
-    <div class="step" id="vinStep" hidden>
-      <div class="step-head">
-        <h3>Your VIN</h3>
-        <button type="button" class="linkbtn" id="toYmm">Pick year, make and model instead</button>
+      <div id="vinStep" role="tabpanel" aria-labelledby="tabVin" hidden>
+        <label>17-character VIN<input id="vin" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 4T1B11HK5JU123456">
+          <span class="hint">Most accurate. It's on your insurance card, registration, or the driver's side of the dashboard.</span></label>
       </div>
-      <label>17-character VIN<input id="vin" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. 4T1B11HK5JU123456">
-        <span class="hint">It's on your insurance card, registration, or the driver's side of the dashboard.</span></label>
     </div>
 
     <div class="vehicle-chip" id="chip" aria-live="polite"></div>
@@ -268,7 +268,7 @@
     if (!modelSel.value){ fill(engSel, "Engine", [], true); return; }
     if (modelSel.value === "__missing"){
       fill(engSel, "Engine", [], true);
-      setStatus($("vstatus"), "warn", "Heavy-duty trucks (like an F-250 or Ram 2500) aren't in this list. <button type=\"button\" class=\"linkbtn\" data-vin>Use your VIN instead</button>.");
+      setStatus($("vstatus"), "warn", "Heavy-duty trucks (like an F-250 or Ram 2500) aren't in this list. <button type=\"button\" class=\"linkbtn\" data-vin>Use the VIN tab instead</button>.");
       return;
     }
     loading(engSel, "Loading engines…");
@@ -295,20 +295,31 @@
   });
 
   function epaDown(){
-    setStatus($("vstatus"), "warn", "The vehicle list isn't loading right now. <button type=\"button\" class=\"linkbtn\" data-vin>Use your VIN instead</button>, or continue and I'll confirm your car before the visit.");
+    setStatus($("vstatus"), "warn", "The vehicle list isn't loading right now. <button type=\"button\" class=\"linkbtn\" data-vin>Use the VIN tab instead</button>, or continue and I'll confirm your car before the visit.");
   }
 
   // VIN mode
-  function setMode(m){
+  function setMode(m, focusField){
     mode = m;
     $("ymm").hidden = m !== "ymm";
     $("vinStep").hidden = m !== "vin";
+    for (const [id, on] of [["tabYmm", m === "ymm"], ["tabVin", m === "vin"]]){
+      $(id).setAttribute("aria-selected", on); $(id).tabIndex = on ? 0 : -1;
+    }
     clearStatus($("vstatus")); updateChip();
-    if (m === "vin") $("vin").focus();
+    if (focusField && m === "vin") $("vin").focus();
   }
-  $("toVin").addEventListener("click", () => setMode("vin"));
-  $("toYmm").addEventListener("click", () => setMode("ymm"));
-  document.addEventListener("click", (e) => { if (e.target.matches("[data-vin]")) setMode("vin"); });
+  $("tabYmm").addEventListener("click", () => setMode("ymm"));
+  $("tabVin").addEventListener("click", () => setMode("vin", true));
+  for (const id of ["tabYmm", "tabVin"]){
+    $(id).addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight"){
+        e.preventDefault(); const next = mode === "ymm" ? "vin" : "ymm";
+        setMode(next); $(next === "vin" ? "tabVin" : "tabYmm").focus();
+      }
+    });
+  }
+  document.addEventListener("click", (e) => { if (e.target.matches("[data-vin]")) setMode("vin", true); });
 
   let vinTimer;
   $("vin").addEventListener("input", (e) => {
