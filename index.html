@@ -15,8 +15,21 @@
 <meta property="og:description" content="Full-synthetic oil changes at your home or work in Cache Valley. Only 50 Introductory Offers available.">
 <meta property="og:image" content="https://hillsidemobileauto.com/assets/hero-door-hangers.jpg">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+  /* October hours strip (temporary). Hidden by default; the script below shows it until Oct 31. */
+  .promo{display:block;background:var(--amber);color:var(--navy);text-align:center;text-decoration:none;font-size:14px;font-weight:700;line-height:1.4;padding:9px 16px}
+  .promo span{font-weight:400}
+  .promo:hover span,.promo:focus-visible span{text-decoration:underline}
+  .promo:focus-visible{outline:3px solid var(--navy);outline-offset:-3px}
+</style>
 </head>
 <body>
+
+<a class="promo" id="promo" href="#oil-change" hidden>October hours: 6 AM to 9 PM, Monday through Saturday. <span>Get it done before work or after dinner.</span></a>
+<script>
+  // Show the October hours strip until the end of Oct 31, 2026 (Utah time = 6:00 UTC on Nov 1).
+  if (Date.now() < Date.UTC(2026, 10, 1, 6, 0, 0)) document.getElementById("promo").hidden = false;
+</script>
 
 <header class="s-head">
   <a class="badge-link" href="/" aria-label="Hillside Mobile Auto home"><img src="assets/badge.svg" alt="Hillside Mobile Auto" width="907" height="376"></a>
