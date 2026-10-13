@@ -27,6 +27,9 @@
   .promo:focus-visible{outline:3px solid var(--navy);outline-offset:-3px}
   /* Footer town list (for local search) */
   .foot .towns{font-size:14px;color:#cfd6dc;line-height:1.6}
+  /* Footer "Licensed and insured" line (hidden until the policy starts; see script at the bottom) */
+  .foot .insured{font-size:14px;font-weight:700;color:#cfd6dc;line-height:1.6}
+  .foot .insured[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -290,6 +293,7 @@
       <img src="assets/badge.svg" alt="Hillside Mobile Auto" width="907" height="376">
       <p class="area">Based in Nibley, serving Cache Valley from Wellsville to Smithfield</p>
       <p class="towns">Wellsville · Hyrum · Nibley · Millville · Providence · River Heights · Logan · North Logan · Hyde Park · Smithfield</p>
+      <p class="insured" id="insured" hidden>Licensed and insured</p>
       <p class="contact">Call or text <a href="sms:+18018663466">801-866-3466</a> · <a href="mailto:hi@hillsidemobileauto.com">hi@hillsidemobileauto.com</a></p>
       <p class="links"><a href="/terms.html">Service Terms</a><a href="/introductory-offer-terms.html">Introductory Offer Terms</a></p>
       <p class="copy-r">© 2026 Hillside Mobile Auto, LLC</p>
@@ -297,6 +301,10 @@
   </div>
 </footer>
 
+<script>
+  // Show "Licensed and insured" once the policy starts: 12:01 AM Utah time on Oct 14, 2026 (06:01 UTC).
+  if (Date.now() >= Date.UTC(2026, 9, 14, 6, 1, 0)) document.getElementById("insured").hidden = false;
+</script>
 <script src="assets/home.js"></script>
 </body>
 </html>
