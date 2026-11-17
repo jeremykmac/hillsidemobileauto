@@ -2,7 +2,7 @@
   const WORKER = "https://hma-worker.jeremykmacdonald.workers.dev/intake";
   const FALLBACK_BOOKING = "https://app.squareup.com/appointments/book/8vo31a3owzji1t/L7HJP6SJY1D4C/start";
   const EPA = "https://www.fueleconomy.gov/ws/rest/vehicle/menu";
-  const TERMS_VERSION = "2026-10-06"; // date of the current Service Terms (terms.html). Update when the terms change.
+  const TERMS_VERSION = "2026-11-01"; // date of the current Service Terms (terms.html). Update when the terms change.
   const IN_SCOPE = ["Acura","Buick","Cadillac","Chevrolet","Chrysler","Dodge","Ford","Genesis","GMC","Honda","Hyundai","Infiniti","Isuzu","Jeep","Kia","Lexus","Lincoln","Mazda","Mercury","Mitsubishi","Nissan","Oldsmobile","Plymouth","Pontiac","Ram","Saturn","Scion","Subaru","Suzuki","Toyota"];
 
   const $ = (id) => document.getElementById(id);
@@ -11,6 +11,10 @@
   let groups = new Map();      // base model name -> [EPA model names]
   let mode = "ymm";            // or "vin"
   let vinInfo = null;          // decoded VIN
+  let reason = "service";      // service | winter | repair (the three choice buttons)
+  let allYears = [];           // every EPA year; services show 2000+, repairs show all
+  let allMakes = [];           // EPA makes for the picked year
+  const isRepair = () => reason === "repair";
 
   const asList = (x) => (x == null ? [] : Array.isArray(x) ? x : [x]);
   async function epa(path){
@@ -110,31 +114,49 @@
   async function initYears(){
     loading(yearSel, "Loading…");
     try{
-      const ys = (await epa("/year")).map((y) => y.value).filter((y) => +y >= 2000);
-      fill(yearSel, "Year", ys, false);
+      allYears = (await epa("/year")).map((y) => y.value);
     }catch(e){
-      const ys = []; const now = new Date().getFullYear() + 1;
-      for (let y = now; y >= 2000; y--) ys.push(String(y));
-      fill(yearSel, "Year", ys, false);
+      allYears = []; const now = new Date().getFullYear() + 1;
+      for (let y = now; y >= 1984; y--) allYears.push(String(y));
     }
+    renderYears();
+  }
+  function renderYears(){
+    const keep = yearSel.value;
+    const ys = allYears.filter((y) => isRepair() || +y >= 2000);
+    fill(yearSel, "Year", ys, false);
+    if (keep && ys.includes(keep)) yearSel.value = keep;
+    else if (keep) yearSel.dispatchEvent(new Event("change"));
+  }
+  // Oil changes and winter prep: makes I service. Repairs: any make, Jeremy decides.
+  function renderMakes(){
+    const keep = makeSel.value;
+    const list = isRepair() ? allMakes : allMakes.filter((m) => IN_SCOPE.some((x) => x.toLowerCase() === m.toLowerCase()));
+    fill(makeSel, "Make", [...list, { text: "Other make", value: "__other" }], false);
+    if (keep && (keep === "__other" || list.includes(keep))){ makeSel.value = keep; if (keep === "__other") makeSel.dispatchEvent(new Event("change")); }
+    else if (keep) makeSel.dispatchEvent(new Event("change"));
+  }
+  function showOther(label){
+    $("otherWrap").hidden = !label;
+    if (label) $("otherLabel").textContent = label;
   }
 
   yearSel.addEventListener("change", async () => {
-    fill(modelSel, "Model", [], true); fill(engSel, "Engine", [], true); clearStatus($("vstatus")); updateChip();
+    fill(modelSel, "Model", [], true); fill(engSel, "Engine", [], true); clearStatus($("vstatus")); showOther(""); updateChip();
     if (!yearSel.value){ fill(makeSel, "Make", [], true); return; }
     loading(makeSel, "Loading makes…");
     try{
-      const makes = (await epa("/make?year=" + yearSel.value)).map((m) => m.text);
-      const inScope = makes.filter((m) => IN_SCOPE.some((x) => x.toLowerCase() === m.toLowerCase()));
-      fill(makeSel, "Make", [...inScope, { text: "Other make", value: "__other" }], false);
-    }catch(e){ epaDown(); }
+      allMakes = (await epa("/make?year=" + yearSel.value)).map((m) => m.text);
+      renderMakes();
+    }catch(e){ allMakes = []; renderMakes(); epaDown(); }
   });
 
   makeSel.addEventListener("change", async () => {
-    fill(engSel, "Engine", [], true); clearStatus($("vstatus")); updateChip();
+    fill(engSel, "Engine", [], true); clearStatus($("vstatus")); showOther(""); updateChip();
     if (!makeSel.value){ fill(modelSel, "Model", [], true); return; }
     if (makeSel.value === "__other"){
       fill(modelSel, "Model", [], true);
+      if (isRepair()){ showOther("Make and model"); updateChip(); return; }
       setStatus($("vstatus"), "warn", "I currently service most domestic, Japanese and Korean vehicles. <a href=\"sms:+18018663466\">Text me</a> your year, make and model and I'll see if I can help.");
       return;
     }
@@ -148,10 +170,11 @@
   });
 
   modelSel.addEventListener("change", async () => {
-    clearStatus($("vstatus")); updateChip();
+    clearStatus($("vstatus")); showOther(""); updateChip();
     if (!modelSel.value){ fill(engSel, "Engine", [], true); return; }
     if (modelSel.value === "__missing"){
       fill(engSel, "Engine", [], true);
+      if (isRepair()){ showOther("Model"); updateChip(); return; }
       setStatus($("vstatus"), "warn", "Heavy-duty trucks (like an F-250 or Ram 2500) aren't in this list. <button type=\"button\" class=\"linkbtn\" data-vin>Use the VIN tab instead</button>.");
       return;
     }
@@ -169,7 +192,7 @@
           if (!seen.has(l)){ seen.add(l); engines.push(l); }
         }
       });
-      if (!engines.length){ fill(engSel, "Engine", [], true); setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes. If your car does have an engine, <a href=\"sms:+18018663466\">text me</a> the year, make and model."); return; }
+      if (!engines.length){ fill(engSel, "Engine", [], true); if (isRepair()){ updateChip(); return; } setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes. If your car does have an engine, <a href=\"sms:+18018663466\">text me</a> the year, make and model."); return; }
       engines.sort((a, b) => (parseFloat(a) || 99) - (parseFloat(b) || 99));
       const items = engines.map((e) => ({ text: e, value: e }));
       items.push({ text: "Not sure", value: "__unsure" });
@@ -181,7 +204,7 @@
   engSel.addEventListener("change", () => {
     clearStatus($("vstatus"));
     const v = engSel.value;
-    if (/diesel/i.test(v)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
+    if (/diesel/i.test(v) && !isRepair()) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
     updateChip();
   });
 
@@ -231,7 +254,7 @@
       vinInfo = { year: d.ModelYear, make: d.Make, model: d.Model, engine: [disp, cyl, turbo].filter(Boolean).join(" "), fuel: d.FuelTypePrimary || "" };
       clearStatus($("vstatus"));
       if (/^electric$/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Good news: electric cars don't need oil changes.");
-      else if (/diesel/i.test(vinInfo.fuel)) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
+      else if (/diesel/i.test(vinInfo.fuel) && !isRepair()) setStatus($("vstatus"), "warn", "Diesels need a quick check first. <a href=\"sms:+18018663466\">Text me</a> and I'll let you know if I can take it.");
       updateChip();
     }catch(e){
       setStatus($("vstatus"), "warn", "I couldn't decode that VIN. Double-check it, or switch back to year, make and model.");
@@ -241,9 +264,20 @@
   function titleCase(s){ return String(s || "").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()); }
   function currentVehicle(){
     if (mode === "vin") return vinInfo ? { year: vinInfo.year, make: titleCase(vinInfo.make), model: vinInfo.model, engine: vinInfo.engine, vin: $("vin").value } : null;
-    if (!yearSel.value || !makeSel.value || makeSel.value === "__other" || !modelSel.value || modelSel.value === "__missing" || !engSel.value) return null;
+    if (!yearSel.value || !makeSel.value) return null;
+    const typed = $("other").value.trim().replace(/\s+/g, " ");
+    if (makeSel.value === "__other"){
+      // Repairs only: "Volkswagen Jetta" -> make Volkswagen, model Jetta
+      if (!isRepair() || !typed) return null;
+      const [mk, ...rest] = typed.split(" ");
+      return { year: yearSel.value, make: titleCase(mk), model: rest.join(" ") || "Model not given", engine: "" };
+    }
+    if (!modelSel.value) return null;
+    if (modelSel.value === "__missing") return isRepair() && typed ? { year: yearSel.value, make: makeSel.value, model: typed, engine: "" } : null;
+    if (!engSel.value && !(isRepair() && engSel.disabled)) return isRepair() ? { year: yearSel.value, make: makeSel.value, model: modelSel.value, engine: "" } : null;
     return { year: yearSel.value, make: makeSel.value, model: modelSel.value, engine: engSel.value === "__unsure" ? "" : engSel.value };
   }
+  $("other").addEventListener("input", () => updateChip());
   function updateChip(){
     const v = currentVehicle(); const chip = $("chip");
     if (!v){ chip.className = "vehicle-chip"; chip.textContent = ""; return; }
@@ -272,25 +306,75 @@
     e.target.value = d.length > 6 ? `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : d.length > 3 ? `(${d.slice(0,3)}) ${d.slice(3)}` : d;
   });
 
-  // Submit: save to the worker, then send to Square
+  // The three choices: book a service, winter prep, or a repair estimate
+  const COPY = {
+    service: { btn: "Continue to Booking", after: "Next you'll pick a time, add any extras and pay a deposit on Square, $20 for most services. It comes off your total." },
+    winter:  { btn: "Book Winter Prep", after: "Next you'll pick a time, add any extras and pay a $20 deposit on Square. It comes off your total." },
+    repair:  { btn: "Send My Estimate Request", after: "Nothing is booked or charged. I'll text you an estimate and next steps." },
+  };
+  function setReason(r){
+    if (!COPY[r]) return;
+    const changed = r !== reason; reason = r;
+    document.querySelectorAll(".choice").forEach((b) => b.setAttribute("aria-pressed", b.dataset.choice === r ? "true" : "false"));
+    $("repairBox").hidden = r !== "repair";
+    $("townWrap").hidden = r !== "repair";
+    $("hintRepair").hidden = r !== "repair";
+    $("hintBook").hidden = r === "repair";
+    $("winterBox").hidden = r !== "winter";
+    $("go").textContent = COPY[r].btn;
+    $("after").textContent = COPY[r].after;
+    clearStatus($("fstatus"));
+    if (changed){ clearStatus($("vstatus")); showOther(""); if (allYears.length) renderYears(); if (yearSel.value && allMakes.length) renderMakes(); updateChip(); }
+  }
+  document.querySelectorAll(".choice").forEach((b) => b.addEventListener("click", () => setReason(b.dataset.choice)));
+  // Links anywhere on the page ("Get a Free Estimate", "Book Winter Prep"...) pick the matching choice
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("[data-pick]"); if (!a) return;
+    setReason(a.dataset.pick);
+  });
+
+  function resetBtn(){ const btn = $("go"); btn.disabled = !agreeService.checked; btn.textContent = COPY[reason].btn; }
+  const textLink = (msg) => "sms:+18018663466?&body=" + encodeURIComponent(msg);
+
+  // Submit: save to the worker, then send to Square (or, for repairs, confirm right here)
   $("picker").addEventListener("submit", async (e) => {
     e.preventDefault();
     const fs = $("fstatus"); clearStatus(fs);
     const v = currentVehicle();
     const name = $("name").value.trim();
     const digits = $("phone").value.replace(/\D/g, "");
-    if (!v){ setStatus(fs, "err", mode === "vin" ? "Enter a full 17-character VIN, or switch to year, make and model." : "Pick your year, make, model and engine (or \"Not sure\")."); return; }
+    const desc = $("desc").value.trim();
+    const town = $("town").value;
+    if (!v){
+      const msg = mode === "vin" ? "Enter a full 17-character VIN, or switch to year, make and model."
+        : isRepair() ? "Pick your year and make, then your model (or type it in)."
+        : "Pick your year, make, model and engine (or \"Not sure\").";
+      setStatus(fs, "err", msg); return;
+    }
+    if (isRepair() && !desc){ setStatus(fs, "err", "Tell me what's going on with the car."); $("desc").focus(); return; }
     if (!name){ setStatus(fs, "err", "Add your name."); $("name").focus(); return; }
     if (digits.length !== 10){ setStatus(fs, "err", "Add a 10-digit mobile number."); $("phone").focus(); return; }
+    if (isRepair() && !town){ setStatus(fs, "err", "Pick the town where the car is."); $("town").focus(); return; }
     if (!agreeService.checked){ setStatus(fs, "err", "Check the box to agree to the Service Terms."); agreeService.focus(); return; }
 
-    const btn = $("go"); btn.disabled = true; btn.innerHTML = "<span class=\"spin\"></span>Saving your car…";
-    const body = { name, phone: digits, year: v.year, make: v.make, model: v.model, engine: v.engine, vin: v.vin || "", mileage: $("miles").value, website: $("website").value, terms_accepted: agreeService.checked, terms_version: TERMS_VERSION };
+    const btn = $("go"); btn.disabled = true;
+    btn.innerHTML = "<span class=\"spin\"></span>" + (isRepair() ? "Sending…" : "Saving your car…");
+    const body = { reason, name, phone: digits, year: v.year, make: v.make, model: v.model, engine: v.engine, vin: v.vin || "", mileage: $("miles").value, website: $("website").value, terms_accepted: agreeService.checked, terms_version: TERMS_VERSION };
+    if (isRepair()){ body.description = desc; body.town = town; }
+    if (reason === "winter") body.winter_wheels = $("winterWheels").checked;
+    const carText = [v.year, v.make, v.model].join(" ");
     try{
       const r = await fetch(WORKER, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const d = await r.json().catch(() => ({}));
+      if (isRepair()){
+        if (!r.ok || !d.ok) throw new Error(d.error || "send failed");
+        document.querySelectorAll("#picker > .step, #picker > .agree, #picker > .intro").forEach((el) => { el.hidden = true; });
+        const done = $("done"); done.hidden = false; done.focus();
+        done.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
       if (d.status === "out_of_scope"){
-        btn.disabled = false; btn.textContent = "Book My Oil Change";
+        resetBtn();
         setStatus(fs, "warn", "Thanks, I've got your info. This vehicle needs a quick check before booking. <a href=\"sms:+18018663466\">Text me</a> and I'll get back to you fast.");
         return;
       }
@@ -298,8 +382,14 @@
       btn.innerHTML = "<span class=\"spin\"></span>Opening booking…";
       window.location.href = d.next || FALLBACK_BOOKING;
     }catch(err){
+      resetBtn();
+      if (isRepair()){
+        // Never lose a repair lead: hand them a text with their details filled in.
+        const msg = "Hi Jeremy, I'd like an estimate. " + name + ", " + carText + ", in " + town + ". " + desc;
+        setStatus(fs, "warn", "That didn't go through just now. <a href=\"" + textLink(msg) + "\">Send it as a text instead</a> (it's all filled in), or call 801-866-3466.");
+        return;
+      }
       // Never block a booking because the save failed. Jeremy's prep list will flag the missing car.
-      btn.disabled = false; btn.textContent = "Book My Oil Change";
       setStatus(fs, "warn", "I couldn't save your car details just now. <a href=\"" + FALLBACK_BOOKING + "\">Continue to booking anyway</a> and I'll confirm your car by text.");
     }
   });
